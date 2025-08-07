@@ -21,10 +21,17 @@
       box-sizing: border-box;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       font-family: 'Inter', sans-serif;
       background-color: var(--bg);
       color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
 
     header {
@@ -32,6 +39,7 @@
       color: var(--white);
       padding: 30px 20px;
       text-align: center;
+      flex-shrink: 0;
     }
 
     header h1 {
@@ -40,14 +48,18 @@
 
     nav {
       margin-top: 15px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
     }
 
     nav a {
-      margin: 0 12px;
       color: var(--white);
       text-decoration: none;
       font-weight: 500;
       transition: color 0.3s ease;
+      font-size: 1rem;
     }
 
     nav a:hover {
@@ -55,7 +67,10 @@
     }
 
     main {
+      flex-grow: 1;
       padding: 40px 20px;
+      max-width: 1200px;
+      margin: 0 auto;
     }
 
     h2 {
@@ -82,6 +97,7 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      text-align: center;
     }
 
     .product:hover {
@@ -101,12 +117,14 @@
     .product h3 {
       font-size: 1.25rem;
       margin-bottom: 8px;
+      color: var(--primary);
     }
 
     .product p {
       margin-bottom: 10px;
       color: #555;
       flex-grow: 1;
+      font-size: 0.95rem;
     }
 
     .price {
@@ -125,6 +143,7 @@
       text-decoration: none;
       font-weight: 600;
       transition: background-color 0.3s ease;
+      font-size: 0.95rem;
     }
 
     .btn-details:hover {
@@ -137,6 +156,7 @@
       padding: 20px;
       font-size: 14px;
       color: #555;
+      flex-shrink: 0;
       margin-top: 40px;
     }
 
@@ -145,9 +165,53 @@
         font-size: 2rem;
       }
 
-      .product-list {
-        flex-direction: column;
-        align-items: center;
+      nav a {
+        font-size: 0.95rem;
+      }
+
+      h2 {
+        font-size: 1.75rem;
+      }
+
+      .product {
+        width: 100%;
+        max-width: 360px;
+      }
+
+      .product img {
+        height: 200px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      main {
+        padding: 30px 15px;
+      }
+
+      .product {
+        padding: 15px;
+      }
+
+      .product h3 {
+        font-size: 1.1rem;
+      }
+
+      .product p {
+        font-size: 0.9rem;
+      }
+
+      .price {
+        font-size: 1rem;
+      }
+
+      .btn-details {
+        padding: 8px 12px;
+        font-size: 0.9rem;
+      }
+
+      footer {
+        font-size: 13px;
+        padding: 15px;
       }
     }
   </style>
