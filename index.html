@@ -1,175 +1,316 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Газ-Котёл | Главная</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
-    <style>
-        :root {
-            --primary: #0d47a1;
-            --accent: #42a5f5;
-            --bg: #f4f4f4;
-            --text: #222;
-            --white: #ffffff;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Газ-Котёл | Главная</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
+  <style>
+    :root {
+      --primary: #0d47a1;
+      --accent: #42a5f5;
+      --bg: #f4f4f4;
+      --text: #222;
+      --white: #ffffff;
+    }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
-            line-height: 1.6;
-        }
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
 
-        header {
-            background-color: var(--primary);
-            color: var(--white);
-            padding: 30px 20px;
-            text-align: center;
-        }
+    header {
+      background-color: var(--primary);
+      color: var(--white);
+      padding: 30px 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
 
-        header h1 {
-            font-size: 2.5rem;
-        }
+    header h1 {
+      font-size: 2.5rem;
+    }
 
-        nav {
-            margin-top: 15px;
-        }
+    nav {
+      margin-top: 15px;
+    }
 
-        nav a {
-            margin: 0 12px;
-            color: var(--white);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
+    nav a {
+      margin: 0 12px;
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
 
-        nav a:hover {
-            color: var(--accent);
-        }
+    nav a:hover {
+      color: var(--accent);
+    }
 
-        main {
-            padding: 40px 20px;
-            text-align: center;
-        }
+    main {
+      flex-grow: 1;
+      padding: 40px 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 60px;
+    }
 
-        h2 {
-            color: var(--primary);
-            font-size: 2rem;
-            margin-bottom: 20px;
-        }
+    section {
+      background: var(--white);
+      padding: 30px 25px;
+      border-radius: 16px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    }
 
-        .product-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 30px;
-            justify-content: center;
-        }
+    .intro h2 {
+      color: var(--primary);
+      font-size: 2.25rem;
+      margin-bottom: 15px;
+      text-align: center;
+    }
 
-        .product {
-            background-color: var(--white);
-            border-radius: 16px;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            width: 280px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
+    .intro p {
+      max-width: 800px;
+      margin: 0 auto;
+      font-size: 1.1rem;
+      color: #444;
+      text-align: center;
+      line-height: 1.5;
+    }
 
-        .product:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.15);
-        }
+    .features {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      gap: 30px;
+    }
 
-        .product img {
-            max-width: 100%;
-            border-radius: 12px;
-            margin-bottom: 15px;
-        }
+    .feature-item {
+      flex: 1 1 280px;
+      text-align: center;
+    }
 
-        .product h3 {
-            font-size: 1.25rem;
-            margin-bottom: 10px;
-        }
+    .feature-item svg {
+      width: 60px;
+      height: 60px;
+      fill: var(--primary);
+      margin-bottom: 15px;
+    }
 
-        .product p {
-            margin-bottom: 10px;
-        }
+    .feature-item h3 {
+      font-size: 1.25rem;
+      margin-bottom: 8px;
+      color: var(--primary);
+    }
 
-        .product strong {
-            display: block;
-            font-size: 1.1rem;
-            color: var(--primary);
-        }
+    .feature-item p {
+      color: #555;
+      font-size: 1rem;
+      line-height: 1.4;
+    }
 
-        footer {
-            background-color: #e0e0e0;
-            text-align: center;
-            padding: 20px;
-            font-size: 14px;
-            color: #555;
-        }
+    .highlight-products h2 {
+      text-align: center;
+      color: var(--primary);
+      margin-bottom: 30px;
+      font-size: 2rem;
+    }
 
-        @media (max-width: 768px) {
-            header h1 {
-                font-size: 2rem;
-            }
-            .product-list {
-                flex-direction: column;
-                align-items: center;
-            }
-        }
-    </style>
+    .highlight-list {
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+      flex-wrap: wrap;
+    }
+
+    .highlight-product {
+      width: 280px;
+      background-color: var(--bg);
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+      text-decoration: none; /* убираем подчёркивание */
+      color: inherit;         /* наследуем цвет текста */
+    }
+
+    .highlight-product:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.15);
+    }
+
+    .highlight-product img {
+      width: 100%;
+      height: 180px;
+      object-fit: contain;
+      background: #fff;
+      border-bottom: 1px solid #ddd;
+      padding: 15px;
+    }
+
+    .highlight-product h3 {
+      margin: 15px 10px 8px;
+      font-size: 1.15rem;
+      color: var(--primary);
+    }
+
+    .highlight-product p {
+      margin: 0 10px 12px;
+      font-size: 0.95rem;
+      color: #555;
+      flex-grow: 1;
+    }
+
+    .highlight-product .price {
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 15px;
+      font-size: 1.1rem;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      background-color: var(--primary);
+      color: var(--white);
+      padding: 12px 25px;
+      border-radius: 8px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+      margin: 0 auto 10px;
+      width: fit-content;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--accent);
+    }
+
+    footer {
+      background-color: #e0e0e0;
+      text-align: center;
+      padding: 20px;
+      font-size: 14px;
+      color: #555;
+      flex-shrink: 0;
+      margin-top: 40px;
+    }
+
+    @media (max-width: 992px) {
+      .features {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .highlight-list {
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      header h1 {
+        font-size: 2rem;
+      }
+
+      main {
+        padding: 30px 15px;
+        gap: 40px;
+      }
+
+      .highlight-product {
+        width: 100%;
+      }
+    }
+  </style>
 </head>
 <body>
-    <header data-aos="fade-down">
-        <h1>Газ-Котёл</h1>
-        <nav>
-            <a href="index.html">Главная</a>
-            <a href="catalog.html">Каталог</a>
-            <a href="about.html">О нас</a>
-            <a href="contacts.html">Контакты</a>
-        </nav>
-    </header>
+  <header data-aos="fade-down">
+    <h1>Газ-Котёл</h1>
+    <nav>
+      <a href="index.html">Главная</a>
+      <a href="catalog.html">Каталог</a>
+      <a href="about.html">О нас</a>
+      <a href="contacts.html">Контакты</a>
+    </nav>
+  </header>
 
-    <main>
-        <section data-aos="fade-up">
-            <h2>Тепло в каждый дом</h2>
-            <p>Современные газовые котлы для уюта и комфорта. Проверенное качество, выгодные цены и индивидуальный подход к каждому клиенту.</p>
-        </section>
+  <main>
+    <section class="intro" data-aos="fade-up">
+      <h2>Добро пожаловать в Газ-Котёл</h2>
+      <p>Мы предлагаем надежные и экономичные газовые котлы для отопления домов, коммерческих и промышленных помещений. 
+      Наши котлы сочетают в себе высокое качество, эффективность и безопасность, чтобы обеспечить комфорт в вашем доме или бизнесе.</p>
+    </section>
 
-        <section class="product-list" data-aos="fade-up" data-aos-delay="100">
-            <div class="product">
-                <img src="images/boiler1.jpg" alt="Газовый котёл Тёплый Дом">
-                <h3>Газовый котёл Тёплый Дом</h3>
-                <p>Надежный котёл для обогрева домов до 250 м².</p>
-                <strong>45 000 ₽</strong>
-            </div>
-            <div class="product">
-                <img src="images/boiler2.jpg" alt="Газовый котёл Комфорт Lux">
-                <h3>Газовый котёл Комфорт Lux</h3>
-                <p>Мощность, стиль и автоматическая система управления.</p>
-                <strong>58 000 ₽</strong>
-            </div>
-        </section>
-    </main>
+    <section class="features" data-aos="fade-up" data-aos-delay="100">
+      <div class="feature-item">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M32 2C18.745 2 8 12.745 8 26c0 13.255 13.364 34 24 34s24-20.745 24-34c0-13.255-10.745-24-24-24zm0 56c-9.17 0-20-19.84-20-26 0-11.046 8.954-20 20-20s20 8.954 20 20c0 6.16-10.83 26-20 26z"/><path d="M30 18h4v22h-4z"/></svg>
+        <h3>Высокая эффективность</h3>
+        <p>Наши котлы обеспечивают максимальный КПД для экономии топлива и снижения затрат на отопление.</p>
+      </div>
+      <div class="feature-item">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M32 6a20 20 0 1 0 20 20A20.023 20.023 0 0 0 32 6zm0 34a14 14 0 1 1 14-14 14.016 14.016 0 0 1-14 14z"/><path d="M32 22a4 4 0 1 0 4 4 4 4 0 0 0-4-4z"/></svg>
+        <h3>Безопасность</h3>
+        <p>Встроенные системы защиты гарантируют безопасную работу в любых условиях.</p>
+      </div>
+      <div class="feature-item">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M8 24h48v4H8zM8 36h48v4H8z"/><circle cx="16" cy="28" r="4"/><circle cx="48" cy="40" r="4"/></svg>
+        <h3>Простота установки</h3>
+        <p>Компактные размеры и продуманная конструкция позволяют быстро и легко установить котёл.</p>
+      </div>
+    </section>
 
-    <footer data-aos="fade-up" data-aos-delay="200">
-        <p>&copy; 2025 Газ-Котёл. Все права защищены.</p>
-    </footer>
+    <section class="highlight-products" data-aos="fade-up" data-aos-delay="200">
+      <h2>Популярные модели из каталога</h2>
+      <div class="highlight-list">
+        <a href="product.html?id=boiler1" class="highlight-product" data-aos="zoom-in" data-aos-delay="250">
+          <img src="images/boiler1.jpg" alt="АОГВ-11,6-3" />
+          <h3>АОГВ-11,6-3</h3>
+          <p>Напольный газовый котёл для обогрева небольших домов.</p>
+          <div class="price">32 000 ₽</div>
+        </a>
+        <a href="product.html?id=boiler5" class="highlight-product" data-aos="zoom-in" data-aos-delay="350">
+          <img src="images/boiler5.jpg" alt="ИШМА-30" />
+          <h3>ИШМА-30</h3>
+          <p>Мощный котёл для отопления больших зданий и коммерческих помещений.</p>
+          <div class="price">57 300 ₽</div>
+        </a>
+        <a href="product.html?id=boiler10" class="highlight-product" data-aos="zoom-in" data-aos-delay="450">
+          <img src="images/boiler10.jpg" alt="ИШМА-50" />
+          <h3>ИШМА-50</h3>
+          <p>Самый мощный котёл из нашего каталога для промышленных нужд.</p>
+          <div class="price">78 900 ₽</div>
+        </a>
+      </div>
+      <div style="text-align:center; margin-top: 20px;">
+        <a href="catalog.html" class="btn-primary" data-aos="fade-up" data-aos-delay="550">Посмотреть весь каталог</a>
+      </div>
+    </section>
+  </main>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-    <script>
-        AOS.init({
-            duration: 800,
-            once: true
-        });
-    </script>
+  <footer data-aos="fade-up" data-aos-delay="600">
+    <p>&copy; 2025 Газ-Котёл. Все права защищены.</p>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+  <script>
+    AOS.init({ duration: 800, once: true });
+  </script>
 </body>
 </html>
