@@ -50,12 +50,14 @@
       transition: color 0.3s ease;
     }
 
-    nav a:hover {
+    nav a:hover, nav a.active {
       color: var(--accent);
     }
 
     main {
       padding: 40px 20px;
+      max-width: 1200px;
+      margin: 0 auto;
     }
 
     h2 {
@@ -79,6 +81,7 @@
       padding: 20px;
       width: 280px;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
     }
 
     .product:hover {
@@ -90,6 +93,8 @@
       max-width: 100%;
       border-radius: 12px;
       margin-bottom: 15px;
+      object-fit: cover;
+      height: 180px;
     }
 
     .product h3 {
@@ -99,6 +104,8 @@
 
     .product p {
       margin-bottom: 10px;
+      font-size: 0.95rem;
+      line-height: 1.3;
     }
 
     .product strong {
@@ -133,7 +140,7 @@
     <h1>Газ-Котёл</h1>
     <nav>
       <a href="index.html">Главная</a>
-      <a href="catalog.html">Каталог</a>
+      <a href="catalog.html" class="active">Каталог</a>
       <a href="about.html">О нас</a>
       <a href="contacts.html">Контакты</a>
     </nav>
@@ -142,30 +149,90 @@
   <main>
     <h2 data-aos="fade-up">Каталог газовых котлов</h2>
     <section class="product-list" data-aos="fade-up" data-aos-delay="100">
-      <div class="product">
-        <img src="images/boiler1.jpg" alt="Газовый котёл Тёплый Дом" />
-        <h3>Газовый котёл Тёплый Дом</h3>
-        <p>Подходит для обогрева до 250 м². Прост в установке и обслуживании.</p>
-        <strong>45 000 ₽</strong>
+      
+      <div class="product" data-aos="zoom-in" data-aos-delay="150">
+        <img src="images/boiler1.jpg" alt="АОГВ-11,6-3" />
+        <h3>АОГВ-11,6-3</h3>
+        <p>Настенный газовый котёл мощностью 11.6 кВт, подходит для отопления и горячего водоснабжения.</p>
+        <strong>35 000 ₽</strong>
       </div>
-      <div class="product">
-        <img src="images/boiler2.jpg" alt="Газовый котёл Комфорт Lux" />
-        <h3>Газовый котёл Комфорт Lux</h3>
-        <p>Мощный и экономичный. Идеален для частных домов с автоматикой.</p>
+
+      <div class="product" data-aos="zoom-in" data-aos-delay="200">
+        <img src="images/boiler2.jpg" alt="ИШМА-12" />
+        <h3>ИШМА-12</h3>
+        <p>Напольный газовый котёл ИШМА мощностью 12 кВт, надёжный и экономичный.</p>
+        <strong>42 000 ₽</strong>
+      </div>
+
+      <div class="product" data-aos="zoom-in" data-aos-delay="250">
+        <img src="images/boiler3.jpg" alt="НЕВА-Транзит 5511" />
+        <h3>НЕВА-Транзит 5511</h3>
+        <p>Настенный газовый котёл НЕВА-Транзит 5511 для отопления частных домов.</p>
+        <strong>28 000 ₽</strong>
+      </div>
+
+      <div class="product" data-aos="zoom-in" data-aos-delay="300">
+        <img src="images/boiler4.jpg" alt="BOSCH Gaz 6000 W" />
+        <h3>BOSCH Gaz 6000 W</h3>
+        <p>Современный настенный газовый котёл BOSCH с системой безопасности.</p>
+        <strong>55 000 ₽</strong>
+      </div>
+
+      <div class="product" data-aos="zoom-in" data-aos-delay="350">
+        <img src="images/boiler5.jpg" alt="Лемакс АОГВ-17,5" />
+        <h3>Лемакс АОГВ-17,5</h3>
+        <p>Напольный газовый котёл Лемакс с мощностью 17.5 кВт.</p>
+        <strong>47 000 ₽</strong>
+      </div>
+
+      <div class="product" data-aos="zoom-in" data-aos-delay="400">
+        <img src="images/boiler6.jpg" alt="Данко АОГВ-11,6" />
+        <h3>Данко АОГВ-11,6</h3>
+        <p>Экономичный газовый котёл Данко АОГВ-11,6 для отопления домов.</p>
+        <strong>33 000 ₽</strong>
+      </div>
+
+      <div class="product" data-aos="zoom-in" data-aos-delay="450">
+        <img src="images/boiler7.jpg" alt="Жуковский АОГВ-23,4" />
+        <h3>Жуковский АОГВ-23,4</h3>
+        <p>Мощный напольный газовый котёл Жуковский АОГВ-23,4 для больших помещений.</p>
+        <strong>61 000 ₽</strong>
+      </div>
+
+      <div class="product" data-aos="zoom-in" data-aos-delay="500">
+        <img src="images/boiler8.jpg" alt="Термона АОГВ-14" />
+        <h3>Термона АОГВ-14</h3>
+        <p>Надёжный котёл Термона АОГВ-14 для отопления загородных домов.</p>
+        <strong>37 000 ₽</strong>
+      </div>
+
+      <div class="product" data-aos="zoom-in" data-aos-delay="550">
+        <img src="images/boiler9.jpg" alt="Rinnai RB-159" />
+        <h3>Rinnai RB-159</h3>
+        <p>Настенный котёл Rinnai RB-159 с современным дизайном и высокой эффективностью.</p>
+        <strong>62 000 ₽</strong>
+      </div>
+
+      <div class="product" data-aos="zoom-in" data-aos-delay="600">
+        <img src="images/boiler10.jpg" alt="Navien ACE 13K" />
+        <h3>Navien ACE 13K</h3>
+        <p>Комбинированный газовый котёл Navien ACE 13K для отопления и горячей воды.</p>
         <strong>58 000 ₽</strong>
       </div>
+
     </section>
   </main>
 
   <footer data-aos="fade-up" data-aos-delay="200">
-    <p>&copy; 2025 Газ-Котёл. Все права защищены.</p>
+    <p>© 2025 Газ-Котёл. Все права защищены.</p>
   </footer>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
   <script>
     AOS.init({
       duration: 800,
-      once: true
+      once: true,
+      easing: 'ease-in-out',
     });
   </script>
 </body>
