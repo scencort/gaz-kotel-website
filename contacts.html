@@ -1,27 +1,141 @@
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <title>Контакты</title>
-    <link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Контакты | Газ-Котёл</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
+  <style>
+    :root {
+      --primary: #0d47a1;
+      --accent: #42a5f5;
+      --bg: #f4f4f4;
+      --text: #222;
+      --white: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    header {
+      background-color: var(--primary);
+      color: var(--white);
+      padding: 30px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+    }
+
+    nav {
+      margin-top: 15px;
+    }
+
+    nav a {
+      margin: 0 12px;
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    nav a:hover {
+      color: var(--accent);
+    }
+
+    main {
+      padding: 40px 20px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    h2 {
+      font-size: 2rem;
+      color: var(--primary);
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .contact-info {
+      background-color: var(--white);
+      border-radius: 16px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+      padding: 30px;
+      font-size: 1.1rem;
+    }
+
+    .contact-info p {
+      margin: 10px 0;
+    }
+
+    .contact-info a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .contact-info a:hover {
+      text-decoration: underline;
+    }
+
+    footer {
+      background-color: #e0e0e0;
+      text-align: center;
+      padding: 20px;
+      font-size: 14px;
+      color: #555;
+      margin-top: 40px;
+    }
+
+    @media (max-width: 768px) {
+      header h1 {
+        font-size: 2rem;
+      }
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <h1>Контакты</h1>
-        <nav>
-            <a href="index.html">Главная</a>
-            <a href="catalog.html">Каталог</a>
-            <a href="about.html">О нас</a>
-            <a href="contacts.html">Контакты</a>
-        </nav>
-    </header>
-    <main>
-        <p>Телефон: +7 (900) 123-45-67</p>
-        <p>Email: info@gaz-kotel.ru</p>
-    </main>
-    <footer>
-        <p>&copy; 2025 Газ-Котёл</p>
-    </footer>
+  <header data-aos="fade-down">
+    <h1>Газ-Котёл</h1>
+    <nav>
+      <a href="index.html">Главная</a>
+      <a href="catalog.html">Каталог</a>
+      <a href="about.html">О нас</a>
+      <a href="contacts.html">Контакты</a>
+    </nav>
+  </header>
+
+  <main>
+    <h2 data-aos="fade-up">Контактная информация</h2>
+    <section class="contact-info" data-aos="fade-up" data-aos-delay="100">
+      <p><strong>Телефон:</strong> <a href="tel:+79001234567">+7 (999) 123-45-67</a></p>
+      <p><strong>Email:</strong> <a href="mailto:info@gaz-kotel.ru">info@gaz-kotel.ru</a></p>
+      <p><strong>Адрес:</strong> г. Москва, ул. Пушкина, д. Калатушкина</p>
+      <p><strong>Часы работы:</strong> Пн–Пт: 09:00–18:00</p>
+    </section>
+  </main>
+
+  <footer data-aos="fade-up" data-aos-delay="200">
+    <p>&copy; 2025 Газ-Котёл. Все права защищены.</p>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+  <script>
+    AOS.init({
+      duration: 800,
+      once: true
+    });
+  </script>
 </body>
 </html>
