@@ -21,6 +21,10 @@
       box-sizing: border-box;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       font-family: 'Inter', sans-serif;
       background-color: var(--bg);
@@ -45,14 +49,18 @@
 
     nav {
       margin-top: 15px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
     }
 
     nav a {
-      margin: 0 12px;
       color: var(--white);
       text-decoration: none;
       font-weight: 500;
       transition: color 0.3s ease;
+      font-size: 1rem;
     }
 
     nav a:hover {
@@ -148,8 +156,8 @@
       display: flex;
       flex-direction: column;
       text-align: center;
-      text-decoration: none; /* убираем подчёркивание */
-      color: inherit;         /* наследуем цвет текста */
+      text-decoration: none;
+      color: inherit;
     }
 
     .highlight-product:hover {
@@ -224,18 +232,55 @@
       }
     }
 
-    @media (max-width: 480px) {
+    @media (max-width: 768px) {
       header h1 {
         font-size: 2rem;
       }
 
+      nav a {
+        font-size: 0.95rem;
+      }
+
+      .intro h2 {
+        font-size: 1.75rem;
+      }
+
+      .intro p {
+        font-size: 1rem;
+      }
+
+      .highlight-products h2 {
+        font-size: 1.75rem;
+      }
+
+      .highlight-product {
+        width: 100%;
+        max-width: 320px;
+      }
+
+      .feature-item {
+        max-width: 320px;
+      }
+    }
+
+    @media (max-width: 480px) {
       main {
         padding: 30px 15px;
         gap: 40px;
       }
 
-      .highlight-product {
-        width: 100%;
+      .highlight-product img {
+        height: 160px;
+      }
+
+      .btn-primary {
+        padding: 10px 20px;
+        font-size: 0.95rem;
+      }
+
+      footer {
+        font-size: 13px;
+        padding: 15px;
       }
     }
   </style>
