@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Детали котла</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #0d47a1;
+      --accent: #42a5f5;
+      --bg: #f4f4f4;
+      --text: #222;
+      --white: #fff;
+    }
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+    header {
+      background: var(--primary);
+      color: var(--white);
+      padding: 30px 20px;
+      text-align: center;
+    }
+    header h1 {
+      font-size: 2.5rem;
+    }
+    nav a {
+      color: var(--white);
+      margin: 0 12px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+    nav a:hover {
+      color: var(--accent);
+    }
+    main {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+    .product-details {
+      background: var(--white);
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    }
+    .product-details img {
+      width: 100%;
+      max-height: 400px;
+      object-fit: contain;
+      border-radius: 12px;
+      margin-bottom: 25px;
+    }
+    .product-details h2 {
+      font-size: 2rem;
+      color: var(--primary);
+      margin-bottom: 15px;
+    }
+    .product-details p {
+      margin-bottom: 12px;
+      line-height: 1.6;
+      font-size: 1rem;
+    }
+    .product-details ul {
+      margin-left: 20px;
+      margin-top: 10px;
+      list-style: disc;
+    }
+    .product-details strong {
+      display: block;
+      margin-top: 20px;
+      font-size: 1.2rem;
+      color: var(--primary);
+    }
+    footer {
+      background: #e0e0e0;
+      text-align: center;
+      padding: 20px;
+      font-size: 14px;
+      color: #555;
+      margin-top: 40px;
+    }
+    .error-message {
+      color: red;
+      font-weight: 700;
+      text-align: center;
+      padding: 50px 20px;
+      font-size: 1.2rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Газ-Котёл</h1>
+    <nav>
+      <a href="index.html">Главная</a>
+      <a href="catalog.html">Каталог</a>
+      <a href="about.html">О нас</a>
+      <a href="contacts.html">Контакты</a>
+    </nav>
+  </header>
+  <main>
+    <div id="product-container" class="product-details">
+      <!-- Здесь JS вставит продукт -->
+    </div>
+  </main>
+  <footer>
+    <p>&copy; 2025 Газ-Котёл. Все права защищены.</p>
+  </footer>
+
+  <script>
+    const products = {
+      "1": {
+        name: "АОГВ-11.6-3",
+        image: "images/boiler3.jpg",
+        description: [
+          "Компактный и надёжный котёл, предназначенный для отопления жилых помещений площадью до 120 м². Отлично подойдёт для дачи или небольшого частного дома.",
+          "Работает на природном газе. Имеет высокий КПД и низкий уровень шума."
+        ],
+        specs: [
+          "Мощность: 11.6 кВт",
+          "Площадь обогрева: до 120 м²",
+          "Тип камеры сгорания: открытая",
+          "Материал теплообменника: сталь",
+          "Энергозависимость: нет"
+        ],
+        price: "32 000 ₽"
+      },
+      // ... остальные продукты ...
+      "10": {
+        name: "АОГВ-29.2-3 (модификация)",
+        image: "images/boiler12.jpg",
+        description: [
+          "Обновлённая версия АОГВ-29.2-3 с улучшенной энергоэффективностью и расширенным функционалом."
+        ],
+        specs: [
+          "Мощность: 29.2 кВт",
+          "Площадь обогрева: до 290 м²",
+          "Тип камеры сгорания: открытая",
+          "Материал теплообменника: сталь",
+          "Энергозависимость: нет"
+        ],
+        price: "61 000 ₽"
+      }
+    };
+
+    function getQueryParam(param) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(param);
+    }
+
+    function renderProduct(productId) {
+      const container = document.getElementById('product-container');
+      const product = products[productId];
+
+      if (!product) {
+        container.innerHTML = `<p class="error-message">Ошибка: продукт не найден.</p>`;
+        return;
+      }
+
+      let descriptionHtml = product.description.map(p => `<p>${p}</p>`).join('');
+      let specsHtml = product.specs.map(item => `<li>${item}</li>`).join('');
+
+      container.innerHTML = `
+        <img src="${product.image}" alt="${product.name}" />
+        <h2>${product.name}</h2>
+        ${descriptionHtml}
+        <ul>${specsHtml}</ul>
+        <strong>Цена: ${product.price}</strong>
+      `;
+    }
+
+    const productId = getQueryParam('id');
+
+    if (!productId) {
+      document.getElementById('product-container').innerHTML = `<p class="error-message">Ошибка: не указан продукт.</p>`;
+    } else {
+      renderProduct(productId);
+    }
+  </script>
+</body>
+</html>

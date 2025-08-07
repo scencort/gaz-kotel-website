@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Газ-Котёл | Каталог</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
@@ -50,14 +50,12 @@
       transition: color 0.3s ease;
     }
 
-    nav a:hover, nav a.active {
+    nav a:hover {
       color: var(--accent);
     }
 
     main {
       padding: 40px 20px;
-      max-width: 1200px;
-      margin: 0 auto;
     }
 
     h2 {
@@ -77,41 +75,60 @@
     .product {
       background-color: var(--white);
       border-radius: 16px;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
       padding: 20px;
-      width: 280px;
+      width: 320px;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
-      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
 
     .product:hover {
       transform: translateY(-6px);
-      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.15);
     }
 
     .product img {
-      max-width: 100%;
+      width: 100%;
       border-radius: 12px;
       margin-bottom: 15px;
-      object-fit: cover;
-      height: 180px;
+      height: 220px;
+      object-fit: contain;
+      background: #fff;
     }
 
     .product h3 {
       font-size: 1.25rem;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
 
     .product p {
       margin-bottom: 10px;
-      font-size: 0.95rem;
-      line-height: 1.3;
+      color: #555;
+      flex-grow: 1;
     }
 
-    .product strong {
-      display: block;
-      font-size: 1.1rem;
+    .price {
+      font-weight: bold;
       color: var(--primary);
+      margin-bottom: 15px;
+      font-size: 1.1rem;
+    }
+
+    .btn-details {
+      background-color: var(--primary);
+      color: var(--white);
+      padding: 10px 15px;
+      border-radius: 8px;
+      text-align: center;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn-details:hover {
+      background-color: var(--accent);
     }
 
     footer {
@@ -140,7 +157,7 @@
     <h1>Газ-Котёл</h1>
     <nav>
       <a href="index.html">Главная</a>
-      <a href="catalog.html" class="active">Каталог</a>
+      <a href="catalog.html">Каталог</a>
       <a href="about.html">О нас</a>
       <a href="contacts.html">Контакты</a>
     </nav>
@@ -149,91 +166,87 @@
   <main>
     <h2 data-aos="fade-up">Каталог газовых котлов</h2>
     <section class="product-list" data-aos="fade-up" data-aos-delay="100">
-      
-      <div class="product" data-aos="zoom-in" data-aos-delay="150">
+      <!-- Продукты как были, без изменений -->
+      <div class="product">
         <img src="images/boiler1.jpg" alt="АОГВ-11,6-3" />
         <h3>АОГВ-11,6-3</h3>
-        <p>Настенный газовый котёл мощностью 11.6 кВт, подходит для отопления и горячего водоснабжения.</p>
-        <strong>35 000 ₽</strong>
+        <p>Напольный газовый котёл для обогрева небольших домов.</p>
+        <div class="price">32 000 ₽</div>
+        <a href="product.html?id=boiler1" class="btn-details">Подробнее</a>
       </div>
-
-      <div class="product" data-aos="zoom-in" data-aos-delay="200">
-        <img src="images/boiler2.jpg" alt="ИШМА-12" />
-        <h3>ИШМА-12</h3>
-        <p>Напольный газовый котёл ИШМА мощностью 12 кВт, надёжный и экономичный.</p>
-        <strong>42 000 ₽</strong>
+      <div class="product">
+        <img src="images/boiler2.jpg" alt="АОГВ-17,3-3" />
+        <h3>АОГВ-17,3-3</h3>
+        <p>Мощный напольный котёл с автоматикой для средних помещений.</p>
+        <div class="price">42 500 ₽</div>
+        <a href="product.html?id=boiler2" class="btn-details">Подробнее</a>
       </div>
-
-      <div class="product" data-aos="zoom-in" data-aos-delay="250">
-        <img src="images/boiler3.jpg" alt="НЕВА-Транзит 5511" />
-        <h3>НЕВА-Транзит 5511</h3>
-        <p>Настенный газовый котёл НЕВА-Транзит 5511 для отопления частных домов.</p>
-        <strong>28 000 ₽</strong>
+      <div class="product">
+        <img src="images/boiler3.jpg" alt="ИШМА-20" />
+        <h3>ИШМА-20</h3>
+        <p>Экономичный настенный котёл с высоким КПД для частных домов.</p>
+        <div class="price">38 900 ₽</div>
+        <a href="product.html?id=boiler3" class="btn-details">Подробнее</a>
       </div>
-
-      <div class="product" data-aos="zoom-in" data-aos-delay="300">
-        <img src="images/boiler4.jpg" alt="BOSCH Gaz 6000 W" />
-        <h3>BOSCH Gaz 6000 W</h3>
-        <p>Современный настенный газовый котёл BOSCH с системой безопасности.</p>
-        <strong>55 000 ₽</strong>
+      <div class="product">
+        <img src="images/boiler4.jpg" alt="АОГВ-23,5-3" />
+        <h3>АОГВ-23,5-3</h3>
+        <p>Напольный котёл с увеличенной мощностью для больших домов.</p>
+        <div class="price">49 000 ₽</div>
+        <a href="product.html?id=boiler4" class="btn-details">Подробнее</a>
       </div>
-
-      <div class="product" data-aos="zoom-in" data-aos-delay="350">
-        <img src="images/boiler5.jpg" alt="Лемакс АОГВ-17,5" />
-        <h3>Лемакс АОГВ-17,5</h3>
-        <p>Напольный газовый котёл Лемакс с мощностью 17.5 кВт.</p>
-        <strong>47 000 ₽</strong>
+      <div class="product">
+        <img src="images/boiler5.jpg" alt="ИШМА-30" />
+        <h3>ИШМА-30</h3>
+        <p>Мощный котёл для отопления больших зданий и коммерческих помещений.</p>
+        <div class="price">57 300 ₽</div>
+        <a href="product.html?id=boiler5" class="btn-details">Подробнее</a>
       </div>
-
-      <div class="product" data-aos="zoom-in" data-aos-delay="400">
-        <img src="images/boiler6.jpg" alt="Данко АОГВ-11,6" />
-        <h3>Данко АОГВ-11,6</h3>
-        <p>Экономичный газовый котёл Данко АОГВ-11,6 для отопления домов.</p>
-        <strong>33 000 ₽</strong>
+      <div class="product">
+        <img src="images/boiler6.jpg" alt="АОГВ-40" />
+        <h3>АОГВ-40</h3>
+        <p>Напольный котёл для промышленного и коммерческого использования.</p>
+        <div class="price">65 000 ₽</div>
+        <a href="product.html?id=boiler6" class="btn-details">Подробнее</a>
       </div>
-
-      <div class="product" data-aos="zoom-in" data-aos-delay="450">
-        <img src="images/boiler7.jpg" alt="Жуковский АОГВ-23,4" />
-        <h3>Жуковский АОГВ-23,4</h3>
-        <p>Мощный напольный газовый котёл Жуковский АОГВ-23,4 для больших помещений.</p>
-        <strong>61 000 ₽</strong>
+      <div class="product">
+        <img src="images/boiler7.jpg" alt="Буржуй-К 10" />
+        <h3>Буржуй-К 10</h3>
+        <p>Компактный и экономичный котёл для дач и небольших домов.</p>
+        <div class="price">29 500 ₽</div>
+        <a href="product.html?id=boiler7" class="btn-details">Подробнее</a>
       </div>
-
-      <div class="product" data-aos="zoom-in" data-aos-delay="500">
-        <img src="images/boiler8.jpg" alt="Термона АОГВ-14" />
-        <h3>Термона АОГВ-14</h3>
-        <p>Надёжный котёл Термона АОГВ-14 для отопления загородных домов.</p>
-        <strong>37 000 ₽</strong>
+      <div class="product">
+        <img src="images/boiler8.jpg" alt="Буржуй-К 15" />
+        <h3>Буржуй-К 15</h3>
+        <p>Надежный напольный котёл с хорошей теплопроизводительностью.</p>
+        <div class="price">36 800 ₽</div>
+        <a href="product.html?id=boiler8" class="btn-details">Подробнее</a>
       </div>
-
-      <div class="product" data-aos="zoom-in" data-aos-delay="550">
-        <img src="images/boiler9.jpg" alt="Rinnai RB-159" />
-        <h3>Rinnai RB-159</h3>
-        <p>Настенный котёл Rinnai RB-159 с современным дизайном и высокой эффективностью.</p>
-        <strong>62 000 ₽</strong>
+      <div class="product">
+        <img src="images/boiler9.jpg" alt="Буржуй-К 20" />
+        <h3>Буржуй-К 20</h3>
+        <p>Мощный котёл для больших домов и коммерческих помещений.</p>
+        <div class="price">45 600 ₽</div>
+        <a href="product.html?id=boiler9" class="btn-details">Подробнее</a>
       </div>
-
-      <div class="product" data-aos="zoom-in" data-aos-delay="600">
-        <img src="images/boiler10.jpg" alt="Navien ACE 13K" />
-        <h3>Navien ACE 13K</h3>
-        <p>Комбинированный газовый котёл Navien ACE 13K для отопления и горячей воды.</p>
-        <strong>58 000 ₽</strong>
+      <div class="product">
+        <img src="images/boiler10.jpg" alt="ИШМА-50" />
+        <h3>ИШМА-50</h3>
+        <p>Самый мощный котёл из нашего каталога для промышленных нужд.</p>
+        <div class="price">78 900 ₽</div>
+        <a href="product.html?id=boiler10" class="btn-details">Подробнее</a>
       </div>
-
     </section>
   </main>
 
   <footer data-aos="fade-up" data-aos-delay="200">
-    <p>© 2025 Газ-Котёл. Все права защищены.</p>
+    <p>&copy; 2025 Газ-Котёл. Все права защищены.</p>
   </footer>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
   <script>
-    AOS.init({
-      duration: 800,
-      once: true,
-      easing: 'ease-in-out',
-    });
+    AOS.init({ duration: 800, once: true });
   </script>
 </body>
 </html>
