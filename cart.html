@@ -329,7 +329,7 @@
       const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
       const items = cart.map(item => `${item.name} — ${item.quantity} шт. × ${item.price} ₽`).join('\n');
 
-      const endpoint = 'https://script.google.com/macros/s/AKfycby_9IgY3Cb4WSdFoK-qAru-DFniNaf_uxrOUTai8RNJ79NXrydFdyMBoNLnIXmOUc4/exec';
+      const endpoint = 'https://script.google.com/macros/s/AKfycbwNaPZQGGv7rSe03LK8u0bpf82MjMbG52WLNf2bKRKJ0p5t2lip0kho0SQsRpXFcrxL/exec';
 
       fetch(endpoint, {
         method: 'POST',
