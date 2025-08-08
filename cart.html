@@ -69,8 +69,8 @@
     }
 
     .cart-icon img {
-      width: 40px;
-      height: 40px;
+      width: 50px;
+      height: 50px;
       object-fit: contain;
       cursor: pointer;
       transition: transform 0.3s ease;
@@ -304,17 +304,12 @@
 
     function generateOrderNumber() {
       let lastOrder = localStorage.getItem('lastOrderNumber');
-      let newOrder = lastOrder ? parseInt(lastOrder) + 1 : 1;
+      let newOrder = lastOrder ? parseInt(lastOrder) + 1 : 1001;
       localStorage.setItem('lastOrderNumber', newOrder);
       return newOrder;
     }
 
     document.getElementById('checkout-btn').addEventListener('click', () => {
-      if (cart.length === 0) {
-        alert('Корзина пуста. Добавьте товары перед оформлением.');
-        return;
-      }
-
       const name = document.getElementById('name').value.trim();
       const phone = document.getElementById('phone').value.trim();
       const email = document.getElementById('email').value.trim();
@@ -325,38 +320,50 @@
         return;
       }
 
+      if (cart.length === 0) {
+        alert('Корзина пуста.');
+        return;
+      }
+
       const orderNumber = generateOrderNumber();
-      const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-      const items = cart.map(item => `${item.name} — ${item.quantity} шт. × ${item.price} ₽`).join('\n');
+      let message = `🛒 Новый заказ #${orderNumber}\n\n👤 Имя: ${name}\n📞 Телефон: ${phone}\n📧 Email: ${email}`;
+      if (telegram) message += `\n💬 Telegram: ${telegram}`;
+      message += `\n\n📦 Товары:\n`;
 
-      const endpoint = 'https://script.google.com/macros/s/AKfycbwNaPZQGGv7rSe03LK8u0bpf82MjMbG52WLNf2bKRKJ0p5t2lip0kho0SQsRpXFcrxL/exec';
+      let total = 0;
+      cart.forEach(item => {
+        const sum = item.price * item.quantity;
+        total += sum;
+        message += `• ${item.name} — ${item.quantity} шт. × ${item.price} ₽ = ${sum} ₽\n`;
+      });
 
-      fetch(endpoint, {
+      message += `\n💰 Итого: ${total} ₽`;
+
+      const token = 'ТВОЙ_ТОКЕН_БОТА';
+      const chatId = 'ТВОЙ_CHAT_ID';
+      const url = `https://api.telegram.org/bot${token}/sendMessage`;
+
+      fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          orderNumber,
-          name,
-          phone,
-          email,
-          telegram,
-          items,
-          total
+          chat_id: chatId,
+          text: message
         })
       })
       .then(response => {
         if (response.ok) {
-          alert(`Спасибо за заказ №${orderNumber}! Он сохранён в таблице.`);
+          alert('Заказ успешно отправлен!');
           localStorage.removeItem('cart');
           renderCart();
           document.getElementById('order-form').reset();
         } else {
-          alert('Ошибка при отправке в таблицу.');
+          alert('Ошибка при отправке заказа.');
         }
       })
       .catch(error => {
         console.error('Ошибка:', error);
-        alert('Ошибка сети. Попробуйте позже.');
+        alert('Ошибка при отправке заказа.');
       });
     });
 
