@@ -304,7 +304,7 @@
 
     function generateOrderNumber() {
       let lastOrder = localStorage.getItem('lastOrderNumber');
-      let newOrder = lastOrder ? parseInt(lastOrder) + 1 : 1001;
+      let newOrder = lastOrder ? parseInt(lastOrder) + 1 : 1;
       localStorage.setItem('lastOrderNumber', newOrder);
       return newOrder;
     }
