@@ -214,6 +214,35 @@
       color: #555;
       margin-top: 40px;
     }
+
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background-color: #323232;
+      color: #fff;
+      padding: 14px 20px;
+      border-radius: 8px;
+      font-size: 1rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      z-index: 9999;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .toast.success {
+      background-color: #4caf50;
+    }
+
+    .toast.error {
+      background-color: #f44336;
+    }
   </style>
 </head>
 <body>
@@ -249,6 +278,8 @@
     <p>&copy; 2025 Газ-Котёл. Все права защищены.</p>
   </footer>
 
+  <div id="toast" class="toast"></div>
+
   <script>
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
 
@@ -278,7 +309,7 @@
           </div>
           <div class="item-controls">
             <input type="number" value="${item.quantity}" min="1" onchange="updateQuantity(${index}, this.value)" />
-            <button onclick="removeItem(${index})">Удалить</button>
+           <button onclick="removeItem(${index})">Удалить</button>
           </div>
         `;
         container.appendChild(card);
@@ -309,6 +340,16 @@
       return newOrder;
     }
 
+    function showToast(message, type = 'success') {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.className = `toast show ${type}`;
+
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 4000);
+    }
+
     document.getElementById('checkout-btn').addEventListener('click', () => {
       const name = document.getElementById('name').value.trim();
       const phone = document.getElementById('phone').value.trim();
@@ -316,12 +357,12 @@
       const telegram = document.getElementById('telegram').value.trim();
 
       if (!name || !phone || !email) {
-        alert('Пожалуйста, заполните все обязательные поля.');
+        showToast('Пожалуйста, заполните все обязательные поля.', 'error');
         return;
       }
 
       if (cart.length === 0) {
-        alert('Корзина пуста.');
+        showToast('Корзина пуста.', 'error');
         return;
       }
 
@@ -339,8 +380,8 @@
 
       message += `\n💰 Итого: ${total} ₽`;
 
-      const token = '7277695679:AAES3IwkfJxwA_rn8XfAoLTKSm0O4lYGGXA';
-      const chatId = '540311740';
+      const token = 'ТВОЙ_ТОКЕН_БОТА';
+      const chatId = 'ТВОЙ_CHAT_ID';
       const url = `https://api.telegram.org/bot${token}/sendMessage`;
 
       fetch(url, {
@@ -353,17 +394,17 @@
       })
       .then(response => {
         if (response.ok) {
-          alert('Заказ успешно отправлен!');
+          showToast('Заказ успешно отправлен!', 'success');
           localStorage.removeItem('cart');
           renderCart();
           document.getElementById('order-form').reset();
         } else {
-          alert('Ошибка при отправке заказа.');
+          showToast('Ошибка при отправке заказа.', 'error');
         }
       })
       .catch(error => {
         console.error('Ошибка:', error);
-        alert('Ошибка при отправке заказа.');
+        showToast('Ошибка при отправке заказа.', 'error');
       });
     });
 
