@@ -302,6 +302,13 @@
       renderCart();
     }
 
+    function generateOrderNumber() {
+      let lastOrder = localStorage.getItem('lastOrderNumber');
+      let newOrder = lastOrder ? parseInt(lastOrder) + 1 : 1001;
+      localStorage.setItem('lastOrderNumber', newOrder);
+      return newOrder;
+    }
+
     document.getElementById('checkout-btn').addEventListener('click', () => {
       if (cart.length === 0) {
         alert('Корзина пуста. Добавьте товары перед оформлением.');
@@ -318,10 +325,11 @@
         return;
       }
 
+      const orderNumber = generateOrderNumber();
       const botToken = '7277695679:AAES3IwkfJxwA_rn8XfAoLTKSm0O4lYGGXA';
       const chatId = '540311740';
 
-      let message = `🛒 *Новый заказ*\n\n👤 Имя: ${name}\n📞 Телефон: ${phone}\n📧 Email: ${email}`;
+      let message = `📄 *Заказ №${orderNumber}*\n\n👤 Имя: ${name}\n📞 Телефон: ${phone}\n📧 Email: ${email}`;
       if (telegram) message += `\n💬 Telegram: ${telegram}`;
       message += `\n\n📦 *Состав заказа:*\n`;
 
@@ -343,7 +351,7 @@
       })
       .then(response => {
         if (response.ok) {
-          alert('Спасибо за заказ! Мы скоро свяжемся с вами.');
+          alert(`Спасибо за заказ №${orderNumber}! Мы скоро свяжемся с вами.`);
           localStorage.removeItem('cart');
           renderCart();
           document.getElementById('order-form').reset();
