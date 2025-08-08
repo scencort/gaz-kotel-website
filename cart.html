@@ -64,7 +64,7 @@
 
     .cart-icon {
       position: absolute;
-      top: 50px;
+      top: 45px;
       right: 35px;
     }
 
@@ -326,37 +326,32 @@
       }
 
       const orderNumber = generateOrderNumber();
-      const botToken = '7277695679:AAES3IwkfJxwA_rn8XfAoLTKSm0O4lYGGXA';
-      const chatId = '540311740';
-
-      let message = `📄 *Заказ №${orderNumber}*\n\n👤 Имя: ${name}\n📞 Телефон: ${phone}\n📧 Email: ${email}`;
-      if (telegram) message += `\n💬 Telegram: ${telegram}`;
-      message += `\n\n📦 *Состав заказа:*\n`;
-
-      cart.forEach(item => {
-        message += `• ${item.name} — ${item.quantity} шт. × ${item.price} ₽\n`;
-      });
-
       const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-      message += `\n💰 *Итого: ${total} ₽*`;
+      const items = cart.map(item => `${item.name} — ${item.quantity} шт. × ${item.price} ₽`).join('\n');
 
-      fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+      const endpoint = 'https://script.google.com/macros/s/AKfycby_9IgY3Cb4WSdFoK-qAru-DFniNaf_uxrOUTai8RNJ79NXrydFdyMBoNLnIXmOUc4/exec';
+
+      fetch(endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          chat_id: chatId,
-          text: message,
-          parse_mode: 'Markdown'
+          orderNumber,
+          name,
+          phone,
+          email,
+          telegram,
+          items,
+          total
         })
       })
       .then(response => {
         if (response.ok) {
-          alert(`Спасибо за заказ №${orderNumber}! Мы скоро свяжемся с вами.`);
+          alert(`Спасибо за заказ №${orderNumber}! Он сохранён в таблице.`);
           localStorage.removeItem('cart');
           renderCart();
           document.getElementById('order-form').reset();
         } else {
-          alert('Ошибка при отправке. Проверьте данные.');
+          alert('Ошибка при отправке в таблицу.');
         }
       })
       .catch(error => {
