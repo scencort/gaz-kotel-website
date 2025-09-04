@@ -170,7 +170,6 @@
         ],
         price: "40 000 ₽"
       },
-      // Добавь остальные котлы boiler4, boiler5 ... boiler10 и т.д.
       "boiler10": {
         name: "АОГВ-29.2-3 (модификация)",
         description: [
@@ -201,7 +200,6 @@
         return;
       }
 
-      // Автоматически формируем путь к картинке по productId
       const imagePath = `images/${productId}.jpg`;
 
       let descriptionHtml = product.description.map(p => `<p>${p}</p>`).join('');
