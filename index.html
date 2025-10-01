@@ -1,11 +1,23 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Газовые котлы для отопления домов и коммерческих помещений. Высокая эффективность, безопасность, простота установки.">
+  
   <title>Газ-Котёл | Главная</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
+  
+  <!-- Preconnect для ускорения загрузки -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  
+  <!-- AOS Library -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+  
   <style>
     :root {
       --primary: #0d47a1;
@@ -13,6 +25,19 @@
       --bg: #f4f4f4;
       --text: #222;
       --white: #ffffff;
+      --gray: #555;
+      --light-gray: #e0e0e0;
+      
+      --spacing-xs: 8px;
+      --spacing-sm: 15px;
+      --spacing-md: 30px;
+      --spacing-lg: 60px;
+      
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      
+      --transition: 0.3s ease;
     }
 
     * {
@@ -26,7 +51,7 @@
     }
 
     body {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       background-color: var(--bg);
       color: var(--text);
       line-height: 1.6;
@@ -35,20 +60,23 @@
       flex-direction: column;
     }
 
+    /* Header */
     header {
       background-color: var(--primary);
       color: var(--white);
-      padding: 30px 20px;
+      padding: var(--spacing-md) 20px;
       text-align: center;
       flex-shrink: 0;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     }
 
     header h1 {
       font-size: 2.5rem;
+      font-weight: 700;
     }
 
     nav {
-      margin-top: 15px;
+      margin-top: var(--spacing-sm);
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
@@ -59,36 +87,47 @@
       color: var(--white);
       text-decoration: none;
       font-weight: 500;
-      transition: color 0.3s ease;
+      transition: color var(--transition);
       font-size: 1rem;
+      padding: var(--spacing-xs) var(--spacing-sm);
+      border-radius: var(--radius-sm);
     }
 
     nav a:hover {
       color: var(--accent);
     }
 
+    nav a.active {
+      color: var(--accent);
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    /* Main */
     main {
       flex-grow: 1;
       padding: 40px 20px;
       max-width: 1200px;
       margin: 0 auto;
+      width: 100%;
       display: flex;
       flex-direction: column;
-      gap: 60px;
+      gap: var(--spacing-lg);
     }
 
     section {
       background: var(--white);
-      padding: 30px 25px;
-      border-radius: 16px;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+      padding: var(--spacing-md) 25px;
+      border-radius: var(--radius-lg);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
     }
 
+    /* Intro Section */
     .intro h2 {
       color: var(--primary);
       font-size: 2.25rem;
-      margin-bottom: 15px;
+      margin-bottom: var(--spacing-sm);
       text-align: center;
+      font-weight: 700;
     }
 
     .intro p {
@@ -97,45 +136,55 @@
       font-size: 1.1rem;
       color: #444;
       text-align: center;
-      line-height: 1.5;
+      line-height: 1.7;
     }
 
+    /* Features Section */
     .features {
       display: flex;
       justify-content: space-around;
       flex-wrap: wrap;
-      gap: 30px;
+      gap: var(--spacing-md);
     }
 
     .feature-item {
       flex: 1 1 280px;
       text-align: center;
+      padding: 20px;
+      transition: transform var(--transition);
+    }
+
+    .feature-item:hover {
+      transform: translateY(-5px);
     }
 
     .feature-item svg {
       width: 60px;
       height: 60px;
       fill: var(--primary);
-      margin-bottom: 15px;
+      margin-bottom: var(--spacing-sm);
     }
 
     .feature-item h3 {
       font-size: 1.25rem;
-      margin-bottom: 8px;
+      margin-bottom: var(--spacing-xs);
       color: var(--primary);
+      font-weight: 600;
     }
 
     .feature-item p {
-      color: #555;
+      color: var(--gray);
       font-size: 1rem;
-      line-height: 1.4;
+      line-height: 1.5;
     }
 
+    /* Highlight Products Section */
     .highlight-products h2 {
       text-align: center;
       color: var(--primary);
-      margin-bottom: 30px;
+      margin-bottom: var(--spacing-md);
       font-size: 2rem;
+      font-weight: 700;
     }
 
     .highlight-list {
@@ -148,10 +197,10 @@
     .highlight-product {
       width: 280px;
       background-color: var(--bg);
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      border-radius: var(--radius-md);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
       overflow: hidden;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      transition: transform var(--transition), box-shadow var(--transition);
       cursor: pointer;
       display: flex;
       flex-direction: column;
@@ -162,7 +211,7 @@
 
     .highlight-product:hover {
       transform: translateY(-6px);
-      box-shadow: 0 10px 24px rgba(0,0,0,0.15);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.15);
     }
 
     .highlight-product img {
@@ -171,27 +220,35 @@
       object-fit: contain;
       background: #fff;
       border-bottom: 1px solid #ddd;
-      padding: 15px;
+      padding: var(--spacing-sm);
     }
 
     .highlight-product h3 {
-      margin: 15px 10px 8px;
+      margin: var(--spacing-sm) 10px var(--spacing-xs);
       font-size: 1.15rem;
       color: var(--primary);
+      font-weight: 600;
     }
 
     .highlight-product p {
       margin: 0 10px 12px;
       font-size: 0.95rem;
-      color: #555;
+      color: var(--gray);
       flex-grow: 1;
+      line-height: 1.4;
     }
 
     .highlight-product .price {
       font-weight: 700;
       color: var(--primary);
-      margin-bottom: 15px;
+      margin-bottom: var(--spacing-sm);
       font-size: 1.1rem;
+    }
+
+    /* CTA Section */
+    .catalog-cta {
+      text-align: center;
+      margin-top: 20px;
     }
 
     .btn-primary {
@@ -199,28 +256,36 @@
       background-color: var(--primary);
       color: var(--white);
       padding: 12px 25px;
-      border-radius: 8px;
+      border-radius: var(--radius-sm);
       font-weight: 600;
       text-decoration: none;
-      transition: background-color 0.3s ease;
-      margin: 0 auto 10px;
-      width: fit-content;
+      transition: background-color var(--transition), transform 0.2s ease;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
     }
 
     .btn-primary:hover {
       background-color: var(--accent);
+      transform: scale(1.05);
     }
 
+    .btn-primary:active {
+      transform: scale(0.98);
+    }
+
+    /* Footer */
     footer {
-      background-color: #e0e0e0;
+      background-color: var(--light-gray);
       text-align: center;
       padding: 20px;
       font-size: 14px;
-      color: #555;
+      color: var(--gray);
       flex-shrink: 0;
       margin-top: 40px;
     }
 
+    /* Responsive Design */
     @media (max-width: 992px) {
       .features {
         flex-direction: column;
@@ -239,6 +304,7 @@
 
       nav a {
         font-size: 0.95rem;
+        padding: 6px 12px;
       }
 
       .intro h2 {
@@ -265,8 +331,12 @@
 
     @media (max-width: 480px) {
       main {
-        padding: 30px 15px;
+        padding: var(--spacing-md) var(--spacing-sm);
         gap: 40px;
+      }
+
+      section {
+        padding: 20px var(--spacing-sm);
       }
 
       .highlight-product img {
@@ -280,7 +350,7 @@
 
       footer {
         font-size: 13px;
-        padding: 15px;
+        padding: var(--spacing-sm);
       }
     }
   </style>
@@ -289,7 +359,7 @@
   <header data-aos="fade-down">
     <h1>Газ-Котёл</h1>
     <nav>
-      <a href="index.html">Главная</a>
+      <a href="index.html" class="active">Главная</a>
       <a href="catalog.html">Каталог</a>
       <a href="about.html">О нас</a>
       <a href="contacts.html">Контакты</a>
@@ -299,25 +369,41 @@
   <main>
     <section class="intro" data-aos="fade-up">
       <h2>Добро пожаловать в Газ-Котёл</h2>
-      <p>Мы предлагаем надежные и экономичные газовые котлы для отопления домов, коммерческих и промышленных помещений. 
-      Наши котлы сочетают в себе высокое качество, эффективность и безопасность, чтобы обеспечить комфорт в вашем доме или бизнесе.</p>
+      <p>
+        Мы предлагаем надежные и экономичные газовые котлы для отопления домов, коммерческих и промышленных помещений. 
+        Наши котлы сочетают в себе высокое качество, эффективность и безопасность, чтобы обеспечить комфорт в вашем доме или бизнесе.
+      </p>
     </section>
 
-    <section class="features" data-aos="fade-up" data-aos-delay="100">
-      <div class="feature-item">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M32 2C18.745 2 8 12.745 8 26c0 13.255 13.364 34 24 34s24-20.745 24-34c0-13.255-10.745-24-24-24zm0 56c-9.17 0-20-19.84-20-26 0-11.046 8.954-20 20-20s20 8.954 20 20c0 6.16-10.83 26-20 26z"/><path d="M30 18h4v22h-4z"/></svg>
-        <h3>Высокая эффективность</h3>
-        <p>Наши котлы обеспечивают максимальный КПД для экономии топлива и снижения затрат на отопление.</p>
-      </div>
-      <div class="feature-item">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M32 6a20 20 0 1 0 20 20A20.023 20.023 0 0 0 32 6zm0 34a14 14 0 1 1 14-14 14.016 14.016 0 0 1-14 14z"/><path d="M32 22a4 4 0 1 0 4 4 4 4 0 0 0-4-4z"/></svg>
-        <h3>Безопасность</h3>
-        <p>Встроенные системы защиты гарантируют безопасную работу в любых условиях.</p>
-      </div>
-      <div class="feature-item">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M8 24h48v4H8zM8 36h48v4H8z"/><circle cx="16" cy="28" r="4"/><circle cx="48" cy="40" r="4"/></svg>
-        <h3>Простота установки</h3>
-        <p>Компактные размеры и продуманная конструкция позволяют быстро и легко установить котёл.</p>
+    <section class="features-section" data-aos="fade-up" data-aos-delay="100">
+      <div class="features">
+        <div class="feature-item">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+            <path d="M32 2C18.745 2 8 12.745 8 26c0 13.255 13.364 34 24 34s24-20.745 24-34c0-13.255-10.745-24-24-24zm0 56c-9.17 0-20-19.84-20-26 0-11.046 8.954-20 20-20s20 8.954 20 20c0 6.16-10.83 26-20 26z"/>
+            <path d="M30 18h4v22h-4z"/>
+          </svg>
+          <h3>Высокая эффективность</h3>
+          <p>Наши котлы обеспечивают максимальный КПД для экономии топлива и снижения затрат на отопление.</p>
+        </div>
+        
+        <div class="feature-item">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+            <path d="M32 6a20 20 0 1 0 20 20A20.023 20.023 0 0 0 32 6zm0 34a14 14 0 1 1 14-14 14.016 14.016 0 0 1-14 14z"/>
+            <path d="M32 22a4 4 0 1 0 4 4 4 4 0 0 0-4-4z"/>
+          </svg>
+          <h3>Безопасность</h3>
+          <p>Встроенные системы защиты гарантируют безопасную работу в любых условиях.</p>
+        </div>
+        
+        <div class="feature-item">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+            <path d="M8 24h48v4H8zM8 36h48v4H8z"/>
+            <circle cx="16" cy="28" r="4"/>
+            <circle cx="48" cy="40" r="4"/>
+          </svg>
+          <h3>Простота установки</h3>
+          <p>Компактные размеры и продуманная конструкция позволяют быстро и легко установить котёл.</p>
+        </div>
       </div>
     </section>
 
@@ -325,26 +411,31 @@
       <h2>Популярные модели из каталога</h2>
       <div class="highlight-list">
         <a href="product.html?id=boiler1" class="highlight-product" data-aos="zoom-in" data-aos-delay="250">
-          <img src="images/boiler1.jpg" alt="АОГВ-11,6-3" />
+          <img src="images/boiler1.jpg" alt="АОГВ-11,6-3">
           <h3>АОГВ-11,6-3</h3>
           <p>Напольный газовый котёл для обогрева небольших домов.</p>
           <div class="price">32 000 ₽</div>
         </a>
+        
         <a href="product.html?id=boiler5" class="highlight-product" data-aos="zoom-in" data-aos-delay="350">
-          <img src="images/boiler5.jpg" alt="ИШМА-30" />
+          <img src="images/boiler5.jpg" alt="ИШМА-30">
           <h3>ИШМА-30</h3>
           <p>Мощный котёл для отопления больших зданий и коммерческих помещений.</p>
           <div class="price">57 300 ₽</div>
         </a>
+        
         <a href="product.html?id=boiler10" class="highlight-product" data-aos="zoom-in" data-aos-delay="450">
-          <img src="images/boiler10.jpg" alt="ИШМА-50" />
+          <img src="images/boiler10.jpg" alt="ИШМА-50">
           <h3>ИШМА-50</h3>
           <p>Самый мощный котёл из нашего каталога для промышленных нужд.</p>
           <div class="price">78 900 ₽</div>
         </a>
       </div>
-      <div style="text-align:center; margin-top: 20px;">
-        <a href="catalog.html" class="btn-primary" data-aos="fade-up" data-aos-delay="550">Посмотреть весь каталог</a>
+      
+      <div class="catalog-cta">
+        <a href="catalog.html" class="btn-primary" data-aos="fade-up" data-aos-delay="550">
+          Посмотреть весь каталог
+        </a>
       </div>
     </section>
   </main>
@@ -355,7 +446,22 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
   <script>
-    AOS.init({ duration: 800, once: true });
+    // Инициализация AOS
+    AOS.init({ 
+      duration: 800, 
+      once: true 
+    });
+
+    // Автоматическая подсветка активной страницы в навигации
+    document.addEventListener('DOMContentLoaded', function() {
+      const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+      document.querySelectorAll('nav a').forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === currentPage) {
+          link.classList.add('active');
+        }
+      });
+    });
   </script>
 </body>
 </html>

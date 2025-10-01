@@ -1,11 +1,23 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Каталог газовых котлов. Широкий выбор моделей для дома и бизнеса.">
+  
   <title>Газ-Котёл | Каталог</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
+  
+  <!-- Preconnect -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  
+  <!-- AOS Library -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+  
   <style>
     :root {
       --primary: #0d47a1;
@@ -13,6 +25,20 @@
       --bg: #f4f4f4;
       --text: #222;
       --white: #ffffff;
+      --gray: #555;
+      --light-gray: #e0e0e0;
+      --success: #4caf50;
+      
+      --spacing-xs: 8px;
+      --spacing-sm: 15px;
+      --spacing-md: 30px;
+      --spacing-lg: 60px;
+      
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      
+      --transition: 0.3s ease;
     }
 
     * {
@@ -26,7 +52,7 @@
     }
 
     body {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       background-color: var(--bg);
       color: var(--text);
       min-height: 100vh;
@@ -34,44 +60,60 @@
       flex-direction: column;
     }
 
+    /* Header */
     header {
       background-color: var(--primary);
       color: var(--white);
-      padding: 30px 20px;
+      padding: var(--spacing-md) 20px;
       text-align: center;
       flex-shrink: 0;
       position: relative;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     }
 
     header h1 {
       font-size: 2.5rem;
+      font-weight: 700;
     }
 
     nav {
-      margin-top: 15px;
+      margin-top: var(--spacing-sm);
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 15px;
+      gap: 10px;
     }
 
     nav a {
       color: var(--white);
       text-decoration: none;
       font-weight: 500;
-      transition: color 0.3s ease;
+      transition: color var(--transition);
       font-size: 1rem;
+      padding: var(--spacing-xs) var(--spacing-sm);
+      border-radius: var(--radius-sm);
     }
 
     nav a:hover {
       color: var(--accent);
     }
 
+    nav a.active {
+      color: var(--accent);
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    /* Cart Icon */
     .cart-icon {
       position: absolute;
-      top: 50px;
+      top: 35px;
       right: 35px;
       z-index: 1000;
+    }
+
+    .cart-icon a {
+      position: relative;
+      display: inline-block;
     }
 
     .cart-icon img {
@@ -79,41 +121,62 @@
       height: 40px;
       object-fit: contain;
       cursor: pointer;
-      transition: transform 0.3s ease;
+      transition: transform var(--transition);
+      filter: brightness(0) invert(1);
     }
 
     .cart-icon img:hover {
       transform: scale(1.1);
     }
 
+    .cart-badge {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background-color: #f44336;
+      color: white;
+      border-radius: 50%;
+      width: 22px;
+      height: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Main */
     main {
       flex-grow: 1;
       padding: 40px 20px;
       max-width: 1200px;
       margin: 0 auto;
+      width: 100%;
     }
 
     h2 {
       text-align: center;
       font-size: 2rem;
       color: var(--primary);
-      margin-bottom: 30px;
+      margin-bottom: var(--spacing-md);
+      font-weight: 700;
     }
 
+    /* Product List */
     .product-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 30px;
-      justify-content: center;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: var(--spacing-md);
+      margin-bottom: 40px;
     }
 
     .product {
       background-color: var(--white);
-      border-radius: 16px;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+      border-radius: var(--radius-lg);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
       padding: 20px;
-      width: 320px;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      transition: transform var(--transition), box-shadow var(--transition);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -122,13 +185,13 @@
 
     .product:hover {
       transform: translateY(-6px);
-      box-shadow: 0 10px 24px rgba(0,0,0,0.15);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.15);
     }
 
     .product img {
       width: 100%;
-      border-radius: 12px;
-      margin-bottom: 15px;
+      border-radius: var(--radius-md);
+      margin-bottom: var(--spacing-sm);
       height: 220px;
       object-fit: contain;
       background: #fff;
@@ -136,53 +199,119 @@
 
     .product h3 {
       font-size: 1.25rem;
-      margin-bottom: 8px;
+      margin-bottom: var(--spacing-xs);
       color: var(--primary);
+      font-weight: 600;
     }
 
     .product p {
       margin-bottom: 10px;
-      color: #555;
+      color: var(--gray);
       flex-grow: 1;
       font-size: 0.95rem;
+      line-height: 1.4;
     }
 
     .price {
-      font-weight: bold;
+      font-weight: 700;
       color: var(--primary);
-      margin-bottom: 15px;
+      margin-bottom: var(--spacing-sm);
       font-size: 1.1rem;
     }
 
-    .btn-details {
-      background-color: var(--primary);
-      color: var(--white);
+    /* Buttons */
+    .product-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .btn {
       padding: 10px 15px;
-      border-radius: 8px;
+      border-radius: var(--radius-sm);
       text-align: center;
       text-decoration: none;
       font-weight: 600;
-      transition: background-color 0.3s ease;
+      transition: all var(--transition);
       font-size: 0.95rem;
-      margin-top: 8px;
-      display: inline-block;
       cursor: pointer;
+      border: none;
+      display: inline-block;
+    }
+
+    .btn-details {
+      background-color: var(--white);
+      color: var(--primary);
+      border: 2px solid var(--primary);
     }
 
     .btn-details:hover {
-      background-color: var(--accent);
+      background-color: var(--primary);
+      color: var(--white);
     }
 
+    .btn-cart {
+      background-color: var(--primary);
+      color: var(--white);
+    }
+
+    .btn-cart:hover {
+      background-color: var(--accent);
+      transform: scale(1.02);
+    }
+
+    .btn-cart:active {
+      transform: scale(0.98);
+    }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background-color: var(--success);
+      color: white;
+      padding: 16px 24px;
+      border-radius: var(--radius-sm);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      display: none;
+      align-items: center;
+      gap: 12px;
+      z-index: 10000;
+      animation: slideIn 0.3s ease;
+    }
+
+    .toast.show {
+      display: flex;
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateX(400px);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    .toast-icon {
+      font-size: 24px;
+    }
+
+    /* Footer */
     footer {
-      background-color: #e0e0e0;
+      background-color: var(--light-gray);
       text-align: center;
       padding: 20px;
       font-size: 14px;
-      color: #555;
+      color: var(--gray);
       flex-shrink: 0;
       margin-top: 40px;
     }
 
+    /* Responsive */
     @media (max-width: 768px) {
       header h1 {
         font-size: 2rem;
@@ -190,25 +319,43 @@
 
       nav a {
         font-size: 0.95rem;
+        padding: 6px 12px;
+      }
+
+      .cart-icon {
+        top: 25px;
+        right: 20px;
+      }
+
+      .cart-icon img {
+        width: 35px;
+        height: 35px;
       }
 
       h2 {
         font-size: 1.75rem;
       }
 
-      .product {
-        width: 100%;
-        max-width: 360px;
+      .product-list {
+        grid-template-columns: 1fr;
+        max-width: 400px;
+        margin: 0 auto 40px;
       }
 
       .product img {
         height: 200px;
       }
+
+      .toast {
+        bottom: 20px;
+        right: 20px;
+        left: 20px;
+      }
     }
 
     @media (max-width: 480px) {
       main {
-        padding: 30px 15px;
+        padding: var(--spacing-md) var(--spacing-sm);
       }
 
       .product {
@@ -227,14 +374,14 @@
         font-size: 1rem;
       }
 
-      .btn-details {
+      .btn {
         padding: 8px 12px;
         font-size: 0.9rem;
       }
 
       footer {
         font-size: 13px;
-        padding: 15px;
+        padding: var(--spacing-sm);
       }
     }
   </style>
@@ -244,27 +391,22 @@
     <h1>Газ-Котёл</h1>
     <nav>
       <a href="index.html">Главная</a>
-      <a href="catalog.html">Каталог</a>
+      <a href="catalog.html" class="active">Каталог</a>
       <a href="about.html">О нас</a>
       <a href="contacts.html">Контакты</a>
     </nav>
-    <a href="cart.html" class="cart-icon" title="Корзина">
-      <img src="images/korzina.png" alt="Корзина" />
-    </a>
+    <div class="cart-icon">
+      <a href="cart.html" title="Корзина">
+        <img src="images/korzina.png" alt="Корзина">
+        <span class="cart-badge" id="cartBadge">0</span>
+      </a>
+    </div>
   </header>
 
   <main>
     <h2 data-aos="fade-up">Каталог газовых котлов</h2>
-    <section class="product-list" data-aos="fade-up" data-aos-delay="100">
-      <div class="product">
-        <img src="images/boiler1.jpg" alt="АОГВ-11,6-3" />
-        <h3>АОГВ-11,6-3</h3>
-        <p>Напольный газовый котёл для обогрева небольших домов.</p>
-        <div class="price">32 000 ₽</div>
-        <a href="product.html?id=boiler1" class="btn-details">Подробнее</a>
-        <a href="#" class="btn-details" onclick="addToCart('boiler1', 'АОГВ-11,6-3', 32000)">В корзину</a>
-      </div>
-      <!-- Добавь остальные товары аналогично -->
+    <section class="product-list" id="productList" data-aos="fade-up" data-aos-delay="100">
+      <!-- Товары будут добавлены через JavaScript -->
     </section>
   </main>
 
@@ -272,23 +414,205 @@
     <p>&copy; 2025 Газ-Котёл. Все права защищены.</p>
   </footer>
 
+  <!-- Toast Notification -->
+  <div class="toast" id="toast">
+    <span class="toast-icon">✓</span>
+    <span id="toastMessage">Товар добавлен в корзину!</span>
+  </div>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
   <script>
-    AOS.init({ duration: 800, once: true });
+    // Инициализация AOS
+    AOS.init({ 
+      duration: 800, 
+      once: true 
+    });
 
-    function addToCart(id, name, price) {
-      const cart = JSON.parse(localStorage.getItem('cart')) || [];
-      const existing = cart.find(item => item.id === id);
-
-      if (existing) {
-        existing.quantity += 1;
-      } else {
-        cart.push({ id, name, price, quantity: 1 });
+    // Данные товаров
+    const products = [
+      {
+        id: 'boiler1',
+        name: 'АОГВ-11,6-3',
+        description: 'Напольный газовый котёл для обогрева небольших домов.',
+        price: 32000,
+        image: 'images/boiler1.jpg'
+      },
+      {
+        id: 'boiler2',
+        name: 'АОГВ-17,4-3',
+        description: 'Котёл средней мощности для домов до 150 м².',
+        price: 38500,
+        image: 'images/boiler2.jpg'
+      },
+      {
+        id: 'boiler3',
+        name: 'АОГВ-23,2-3',
+        description: 'Мощный котёл для больших частных домов.',
+        price: 45200,
+        image: 'images/boiler3.jpg'
+      },
+      {
+        id: 'boiler4',
+        name: 'АОГВ-29-3',
+        description: 'Высокопроизводительный котёл для коттеджей.',
+        price: 52800,
+        image: 'images/boiler4.jpg'
+      },
+      {
+        id: 'boiler5',
+        name: 'ИШМА-30',
+        description: 'Мощный котёл для отопления больших зданий и коммерческих помещений.',
+        price: 57300,
+        image: 'images/boiler5.jpg'
+      },
+      {
+        id: 'boiler6',
+        name: 'ИШМА-35',
+        description: 'Промышленный котёл для крупных объектов.',
+        price: 64900,
+        image: 'images/boiler6.jpg'
+      },
+      {
+        id: 'boiler7',
+        name: 'ИШМА-40',
+        description: 'Котёл повышенной мощности для производственных помещений.',
+        price: 69500,
+        image: 'images/boiler7.jpg'
+      },
+      {
+        id: 'boiler8',
+        name: 'ИШМА-45',
+        description: 'Высокомощный котёл для промышленных комплексов.',
+        price: 74200,
+        image: 'images/boiler8.jpg'
+      },
+      {
+        id: 'boiler9',
+        name: 'ИШМА-48',
+        description: 'Котёл для крупных промышленных объектов.',
+        price: 76800,
+        image: 'images/boiler9.jpg'
+      },
+      {
+        id: 'boiler10',
+        name: 'ИШМА-50',
+        description: 'Самый мощный котёл из нашего каталога для промышленных нужд.',
+        price: 78900,
+        image: 'images/boiler10.jpg'
       }
+    ];
 
-      localStorage.setItem('cart', JSON.stringify(cart));
-      alert("Товар добавлен в корзину!");
+    // Отрисовка товаров
+    function renderProducts() {
+      const productList = document.getElementById('productList');
+      productList.innerHTML = '';
+
+      products.forEach((product, index) => {
+        const productCard = document.createElement('div');
+        productCard.className = 'product';
+        productCard.setAttribute('data-aos', 'zoom-in');
+        productCard.setAttribute('data-aos-delay', (index * 50).toString());
+
+        productCard.innerHTML = `
+          <img src="${product.image}" alt="${product.name}">
+          <h3>${product.name}</h3>
+          <p>${product.description}</p>
+          <div class="price">${product.price.toLocaleString('ru-RU')} ₽</div>
+          <div class="product-actions">
+            <a href="product.html?id=${product.id}" class="btn btn-details">Подробнее</a>
+            <button class="btn btn-cart" 
+                    data-id="${product.id}" 
+                    data-name="${product.name}" 
+                    data-price="${product.price}">
+              В корзину
+            </button>
+          </div>
+        `;
+
+        productList.appendChild(productCard);
+      });
+
+      // Добавляем обработчики после отрисовки
+      attachCartHandlers();
     }
+
+    // Обработчики для кнопок "В корзину"
+    function attachCartHandlers() {
+      document.querySelectorAll('.btn-cart').forEach(button => {
+        button.addEventListener('click', function() {
+          const id = this.dataset.id;
+          const name = this.dataset.name;
+          const price = parseInt(this.dataset.price);
+          
+          addToCart(id, name, price);
+        });
+      });
+    }
+
+    // Добавление товара в корзину
+    function addToCart(id, name, price) {
+      try {
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const existing = cart.find(item => item.id === id);
+
+        if (existing) {
+          existing.quantity += 1;
+        } else {
+          cart.push({ id, name, price, quantity: 1 });
+        }
+
+        localStorage.setItem('cart', JSON.stringify(cart));
+        
+        updateCartBadge();
+        showToast(`${name} добавлен в корзину!`);
+      } catch (error) {
+        console.error('Ошибка при добавлении в корзину:', error);
+        showToast('Ошибка! Попробуйте снова.', false);
+      }
+    }
+
+    // Обновление счётчика корзины
+    function updateCartBadge() {
+      try {
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+        const badge = document.getElementById('cartBadge');
+        
+        if (badge) {
+          badge.textContent = totalItems;
+          badge.style.display = totalItems > 0 ? 'flex' : 'none';
+        }
+      } catch (error) {
+        console.error('Ошибка при обновлении счётчика:', error);
+      }
+    }
+
+    // Показ toast-уведомления
+    function showToast(message, isSuccess = true) {
+      const toast = document.getElementById('toast');
+      const toastMessage = document.getElementById('toastMessage');
+      
+      if (toast && toastMessage) {
+        toastMessage.textContent = message;
+        toast.style.backgroundColor = isSuccess ? '#4caf50' : '#f44336';
+        toast.classList.add('show');
+
+        setTimeout(() => {
+          toast.classList.remove('show');
+        }, 3000);
+      }
+    }
+
+    // Инициализация при загрузке страницы
+    document.addEventListener('DOMContentLoaded', function() {
+      renderProducts();
+      updateCartBadge();
+
+      // Обновляем AOS после добавления элементов
+      setTimeout(() => {
+        AOS.refresh();
+      }, 100);
+    });
   </script>
 </body>
 </html>
