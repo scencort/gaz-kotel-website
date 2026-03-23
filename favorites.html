@@ -3,45 +3,52 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Описание и характеристики газового котла: цена, мощность, площадь обогрева и параметры модели." />
-  <title>Газ-Котёл | Детали товара</title>
+  <meta name="description" content="Избранные товары магазина Газ-Котёл." />
+  <title>Газ-Котёл | Избранное</title>
   <link rel="icon" type="image/svg+xml" href="images/logo-boiler.svg">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
-  <link rel="stylesheet" href="css/common.css">
-  <link rel="stylesheet" href="css/product.css">
+  <link rel="stylesheet" href="css/common.css" />
+  <link rel="stylesheet" href="css/favorites.css" />
 </head>
 <body>
   <header data-aos="fade-down">
     <h1 class="site-brand">
       <a href="index.html" class="brand-link" aria-label="На главную">
-        <img src="images/logo-boiler.svg" alt="Логотип Газ-Котёл" class="brand-logo">
+        <img src="images/logo-boiler.svg" alt="Логотип Газ-Котёл" class="brand-logo" />
         <span>Газ-Котёл</span>
       </a>
     </h1>
     <nav>
       <a href="index.html">Главная</a>
       <a href="catalog.html">Каталог</a>
-      <a href="favorites.html">Избранное</a>
+      <a href="favorites.html" class="active">Избранное</a>
       <a href="about.html">О нас</a>
       <a href="contacts.html">Контакты</a>
       <a href="admin.html">Заказы</a>
     </nav>
     <a href="cart.html" class="cart-icon" title="Корзина">
-      <img src="images/korzina.png" alt="Корзина">
+      <img src="images/korzina.png" alt="Корзина" />
     </a>
   </header>
+
   <main>
-    <div id="product-container" class="product-details" data-aos="fade-up" data-aos-delay="100">
-    </div>
+    <h2 data-aos="fade-up">Избранные товары</h2>
+    <section class="favorites-list" id="favoritesList" data-aos="fade-up" data-aos-delay="100"></section>
   </main>
-  <footer data-aos="fade-up" data-aos-delay="160">
+
+  <footer data-aos="fade-up" data-aos-delay="180">
     <p>&copy; 2026 Газ-Котёл. Все права защищены.</p>
   </footer>
+
+  <div class="toast" id="toast">
+    <span class="toast-icon">✓</span>
+    <span id="toastMessage">Готово</span>
+  </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
   <script src="js/products.js"></script>
   <script src="js/common.js"></script>
-  <script src="js/product.js"></script>
+  <script src="js/favorites.js"></script>
 </body>
 </html>

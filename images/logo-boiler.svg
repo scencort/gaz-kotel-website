@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="logoTitle logoDesc">
+  <title id="logoTitle">Логотип Газ-Котёл</title>
+  <desc id="logoDesc">Иконка котла с пламенем</desc>
+  <defs>
+    <linearGradient id="bodyGrad" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#9fd3ff"/>
+      <stop offset="100%" stop-color="#4f95ff"/>
+    </linearGradient>
+    <linearGradient id="flameGrad" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="#ffd36f"/>
+      <stop offset="55%" stop-color="#ff9f2f"/>
+      <stop offset="100%" stop-color="#ff6a2b"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="24" y="28" width="80" height="72" rx="16" fill="url(#bodyGrad)"/>
+  <rect x="34" y="38" width="60" height="52" rx="12" fill="#0f2d67"/>
+  <circle cx="48" cy="78" r="5" fill="#8ec8ff"/>
+  <circle cx="80" cy="78" r="5" fill="#8ec8ff"/>
+  <rect x="40" y="22" width="48" height="7" rx="3.5" fill="#75b4ff"/>
+
+  <path d="M64 72c-11 0-18-8-18-17 0-10 7-18 16-24 1.2-.8 2.8-.8 4 0 9 6 16 14 16 24 0 9-7 17-18 17z" fill="url(#flameGrad)"/>
+  <path d="M64 67c-5.8 0-9.5-4.2-9.5-9.1 0-5.2 3.9-9.8 8.3-12.9.8-.6 1.9-.6 2.7 0 4.4 3.1 8.3 7.7 8.3 12.9 0 4.9-3.7 9.1-9.5 9.1z" fill="#ffe6b0"/>
+</svg>

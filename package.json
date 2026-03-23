@@ -1,0 +1,12 @@
+{
+  "name": "gaz-kotel-website",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Static website with lightweight Node.js API for order submission",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

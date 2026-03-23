@@ -1,0 +1,103 @@
+main {
+  flex-grow: 1;
+  padding: 42px 20px;
+  max-width: 840px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.thank-card {
+  background: var(--surface-strong);
+  border: 1px solid rgba(136, 178, 247, 0.26);
+  border-radius: var(--radius-lg);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  box-shadow: var(--shadow-strong);
+  padding: 34px;
+  text-align: center;
+}
+
+.success-icon {
+  width: 64px;
+  height: 64px;
+  color: #66d2a4;
+  margin: 0 auto 14px;
+}
+
+.thank-card h2 {
+  margin-bottom: 8px;
+  font-size: 2rem;
+}
+
+.thank-card p {
+  margin-bottom: 14px;
+}
+
+.order-meta {
+  display: grid;
+  gap: 8px;
+  max-width: 420px;
+  margin: 14px auto 0;
+  text-align: left;
+  padding: 14px;
+  border-radius: 12px;
+  background: rgba(13, 36, 81, 0.62);
+  border: 1px solid rgba(137, 182, 255, 0.25);
+}
+
+.actions {
+  margin-top: 18px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.actions .btn {
+  text-decoration: none;
+}
+
+@media (max-width: 768px) {
+  .thank-card {
+    padding: 26px;
+  }
+
+  .thank-card h2 {
+    font-size: 1.7rem;
+  }
+
+  .order-meta {
+    font-size: 0.92rem;
+  }
+}
+
+@media (max-width: 480px) {
+  main {
+    padding: 30px 14px;
+  }
+
+  .thank-card {
+    padding: 20px;
+  }
+
+  .thank-card h2 {
+    font-size: 1.35rem;
+  }
+
+  .thank-card p {
+    font-size: 0.92rem;
+  }
+
+  .success-icon {
+    width: 52px;
+    height: 52px;
+  }
+
+  .actions {
+    flex-direction: column;
+  }
+
+  .actions .btn {
+    width: 100%;
+  }
+}

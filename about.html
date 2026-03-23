@@ -4,319 +4,41 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="О компании Газ-Котёл. Надёжный поставщик газовых котлов с 2015 года. Качественное оборудование и профессиональная поддержка.">
-  
   <title>О нас | Газ-Котёл</title>
-  
-  <!-- Preconnect -->
+  <link rel="icon" type="image/svg+xml" href="images/logo-boiler.svg">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://cdnjs.cloudflare.com">
-  
-  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-  
-  <!-- AOS Library -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
-  
-  <style>
-    :root {
-      --primary: #0d47a1;
-      --accent: #42a5f5;
-      --bg: #f4f4f4;
-      --text: #222;
-      --white: #ffffff;
-      --gray: #555;
-      --light-gray: #e0e0e0;
-      
-      --spacing-xs: 8px;
-      --spacing-sm: 15px;
-      --spacing-md: 30px;
-      --spacing-lg: 60px;
-      
-      --radius-sm: 8px;
-      --radius-md: 12px;
-      --radius-lg: 16px;
-      
-      --transition: 0.3s ease;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-
-    /* Header */
-    header {
-      background-color: var(--primary);
-      color: var(--white);
-      padding: var(--spacing-md) 20px;
-      text-align: center;
-      flex-shrink: 0;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    header h1 {
-      font-size: 2.5rem;
-      font-weight: 700;
-    }
-
-    nav {
-      margin-top: var(--spacing-sm);
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 10px;
-    }
-
-    nav a {
-      color: var(--white);
-      text-decoration: none;
-      font-weight: 500;
-      transition: color var(--transition);
-      font-size: 1rem;
-      padding: var(--spacing-xs) var(--spacing-sm);
-      border-radius: var(--radius-sm);
-    }
-
-    nav a:hover {
-      color: var(--accent);
-    }
-
-    nav a.active {
-      color: var(--accent);
-      background: rgba(255, 255, 255, 0.1);
-    }
-
-    /* Main */
-    main {
-      flex-grow: 1;
-      padding: 40px 20px;
-      max-width: 1000px;
-      margin: 0 auto;
-      width: 100%;
-    }
-
-    h2 {
-      font-size: 2rem;
-      color: var(--primary);
-      text-align: center;
-      margin-bottom: var(--spacing-md);
-      font-weight: 700;
-    }
-
-    /* About Section */
-    .about-text {
-      background-color: var(--white);
-      border-radius: var(--radius-lg);
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-      padding: var(--spacing-md);
-      font-size: 1.1rem;
-      margin-bottom: var(--spacing-lg);
-      transition: transform var(--transition), box-shadow var(--transition);
-    }
-
-    .about-text:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-    }
-
-    .about-text p {
-      margin-bottom: 20px;
-      line-height: 1.8;
-    }
-
-    .about-text p:last-child {
-      margin-bottom: 0;
-    }
-
-    /* Stats Section */
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 25px;
-      margin-bottom: var(--spacing-lg);
-    }
-
-    .stat-item {
-      background-color: var(--white);
-      border-radius: var(--radius-lg);
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-      padding: var(--spacing-md);
-      text-align: center;
-      transition: transform var(--transition), box-shadow var(--transition);
-    }
-
-    .stat-item:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.15);
-    }
-
-    .stat-number {
-      font-size: 3rem;
-      font-weight: 700;
-      color: var(--primary);
-      line-height: 1;
-      margin-bottom: 10px;
-    }
-
-    .stat-label {
-      font-size: 1rem;
-      color: var(--gray);
-      font-weight: 500;
-    }
-
-    /* Advantages Section */
-    .advantages {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 25px;
-      margin-bottom: var(--spacing-lg);
-    }
-
-    .advantage-item {
-      background-color: var(--white);
-      border-radius: var(--radius-lg);
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-      padding: 25px;
-      text-align: center;
-      transition: transform var(--transition), box-shadow var(--transition);
-    }
-
-    .advantage-item:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.15);
-    }
-
-    .advantage-icon {
-      font-size: 3rem;
-      margin-bottom: var(--spacing-sm);
-    }
-
-    .advantage-item h3 {
-      font-size: 1.25rem;
-      color: var(--primary);
-      margin-bottom: 10px;
-      font-weight: 600;
-    }
-
-    .advantage-item p {
-      font-size: 0.95rem;
-      color: var(--gray);
-      line-height: 1.5;
-    }
-
-    /* Section Title */
-    .section-title {
-      font-size: 1.75rem;
-      color: var(--primary);
-      text-align: center;
-      margin-bottom: 25px;
-      font-weight: 700;
-    }
-
-    /* Footer */
-    footer {
-      background-color: var(--light-gray);
-      text-align: center;
-      padding: 20px;
-      font-size: 14px;
-      color: var(--gray);
-      flex-shrink: 0;
-      margin-top: 40px;
-    }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-      header h1 {
-        font-size: 2rem;
-      }
-
-      nav a {
-        font-size: 0.95rem;
-        padding: 6px 12px;
-      }
-
-      h2 {
-        font-size: 1.75rem;
-      }
-
-      .section-title {
-        font-size: 1.5rem;
-      }
-
-      .about-text {
-        font-size: 1rem;
-        padding: 20px;
-      }
-
-      .stat-number {
-        font-size: 2.5rem;
-      }
-
-      .stats {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .advantages {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    @media (max-width: 480px) {
-      main {
-        padding: var(--spacing-md) var(--spacing-sm);
-      }
-
-      .about-text {
-        padding: var(--spacing-sm);
-      }
-
-      .stat-item,
-      .advantage-item {
-        padding: 20px;
-      }
-
-      .stats {
-        grid-template-columns: 1fr;
-      }
-
-      footer {
-        font-size: 13px;
-        padding: var(--spacing-sm);
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/about.css">
 </head>
 <body>
   <header data-aos="fade-down">
-    <h1>Газ-Котёл</h1>
+    <h1 class="site-brand">
+      <a href="index.html" class="brand-link" aria-label="На главную">
+        <img src="images/logo-boiler.svg" alt="Логотип Газ-Котёл" class="brand-logo">
+        <span>Газ-Котёл</span>
+      </a>
+    </h1>
     <nav>
       <a href="index.html">Главная</a>
       <a href="catalog.html">Каталог</a>
+      <a href="favorites.html">Избранное</a>
       <a href="about.html" class="active">О нас</a>
       <a href="contacts.html">Контакты</a>
+      <a href="admin.html">Заказы</a>
     </nav>
+    <a href="cart.html" class="cart-icon" title="Корзина">
+      <img src="images/korzina.png" alt="Корзина">
+    </a>
   </header>
 
   <main>
     <h2 data-aos="fade-up">О компании</h2>
-    
-    <!-- About Text -->
+
     <section class="about-text" data-aos="fade-up" data-aos-delay="100">
       <p>
         <strong>Газ-Котёл</strong> — это надёжный магазин газовых котлов для дома и дачи. Мы специализируемся на качественном оборудовании, подходящем как для небольших домов, так и для больших коттеджей.
@@ -329,7 +51,6 @@
       </p>
     </section>
 
-    <!-- Stats Section -->
     <h3 class="section-title" data-aos="fade-up" data-aos-delay="150">Наши достижения</h3>
     <section class="stats" data-aos="fade-up" data-aos-delay="200">
       <div class="stat-item">
@@ -350,41 +71,52 @@
       </div>
     </section>
 
-    <!-- Advantages Section -->
     <h3 class="section-title" data-aos="fade-up" data-aos-delay="250">Почему выбирают нас</h3>
     <section class="advantages" data-aos="fade-up" data-aos-delay="300">
       <div class="advantage-item">
-        <div class="advantage-icon">✓</div>
+        <div class="advantage-icon" aria-hidden="true">
+          <svg class="icon-svg" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+        </div>
         <h3>Сертифицированное оборудование</h3>
         <p>Все котлы имеют необходимые сертификаты качества и безопасности</p>
       </div>
-      
+
       <div class="advantage-item">
-        <div class="advantage-icon">🚚</div>
+        <div class="advantage-icon" aria-hidden="true">
+          <svg class="icon-svg" viewBox="0 0 24 24"><path d="M3 7h12v8H3z"/><path d="M15 10h3l3 3v2h-6z"/><circle cx="7" cy="17" r="1.8"/><circle cx="18" cy="17" r="1.8"/></svg>
+        </div>
         <h3>Быстрая доставка</h3>
         <p>Доставим ваш заказ в любую точку России в кратчайшие сроки</p>
       </div>
-      
+
       <div class="advantage-item">
-        <div class="advantage-icon">💰</div>
+        <div class="advantage-icon" aria-hidden="true">
+          <svg class="icon-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M9 10.4c0-1 1-1.8 2.3-1.8h1.4c1.3 0 2.3.8 2.3 1.8S14 12.2 12.7 12.2h-1.4c-1.3 0-2.3.8-2.3 1.8s1 1.8 2.3 1.8h1.4c1.3 0 2.3-.8 2.3-1.8"/></svg>
+        </div>
         <h3>Выгодные цены</h3>
         <p>Работаем напрямую с производителями, без посредников</p>
       </div>
-      
+
       <div class="advantage-item">
-        <div class="advantage-icon">🔧</div>
+        <div class="advantage-icon" aria-hidden="true">
+          <svg class="icon-svg" viewBox="0 0 24 24"><path d="M14.6 5.4a4 4 0 0 0 4.9 4.9l-7.9 7.9a2 2 0 1 1-2.8-2.8l7.9-7.9z"/><path d="M17 3l4 4"/></svg>
+        </div>
         <h3>Помощь в установке</h3>
         <p>Консультируем по монтажу и подключению оборудования</p>
       </div>
-      
+
       <div class="advantage-item">
-        <div class="advantage-icon">📞</div>
+        <div class="advantage-icon" aria-hidden="true">
+          <svg class="icon-svg" viewBox="0 0 24 24"><path d="M6.6 10.8c1.3 2.5 3.3 4.5 5.8 5.8l1.9-1.9c.3-.3.7-.4 1.1-.3 1.2.4 2.4.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.3 21 3 13.7 3 4c0-.6.4-1 1-1h3.1c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.4 0 .8-.3 1.1z"/></svg>
+        </div>
         <h3>Техподдержка 24/7</h3>
         <p>Всегда на связи для решения любых вопросов</p>
       </div>
-      
+
       <div class="advantage-item">
-        <div class="advantage-icon">🛡️</div>
+        <div class="advantage-icon" aria-hidden="true">
+          <svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 4.5-3 7.7-7 9-4-1.3-7-4.5-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg>
+        </div>
         <h3>Гарантия</h3>
         <p>Официальная гарантия на всё оборудование от производителя</p>
       </div>
@@ -392,27 +124,10 @@
   </main>
 
   <footer data-aos="fade-up" data-aos-delay="350">
-    <p>&copy; 2025 Газ-Котёл. Все права защищены.</p>
+    <p>&copy; 2026 Газ-Котёл. Все права защищены.</p>
   </footer>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-  <script>
-    // Инициализация AOS
-    AOS.init({
-      duration: 800,
-      once: true
-    });
-
-    // Автоматическая подсветка активной страницы
-    document.addEventListener('DOMContentLoaded', function() {
-      const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-      document.querySelectorAll('nav a').forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href') === currentPage) {
-          link.classList.add('active');
-        }
-      });
-    });
-  </script>
+  <script src="js/common.js"></script>
 </body>
 </html>

@@ -1,0 +1,157 @@
+main {
+  flex-grow: 1;
+  padding: 42px 20px;
+  max-width: 1100px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+h2 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: var(--space-md);
+}
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+#refreshBtn {
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-weight: 700;
+}
+
+#adminStatus {
+  font-size: 0.9rem;
+}
+
+.orders-list {
+  display: grid;
+  gap: 12px;
+}
+
+.order-card,
+.orders-empty {
+  background: var(--surface);
+  border: 1px solid rgba(136, 178, 248, 0.25);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-soft);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+
+.order-card {
+  padding: 14px;
+}
+
+.order-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+
+.order-title {
+  font-size: 1.08rem;
+}
+
+.order-meta {
+  display: grid;
+  gap: 3px;
+  margin-bottom: 8px;
+  font-size: 0.92rem;
+}
+
+.order-items {
+  margin: 8px 0;
+  font-size: 0.9rem;
+  padding-left: 16px;
+}
+
+.order-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.status-badge {
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: 0.78rem;
+  border: 1px solid rgba(144, 190, 255, 0.35);
+  background: rgba(74, 129, 230, 0.2);
+}
+
+.status-badge.in-progress {
+  background: rgba(255, 193, 87, 0.2);
+  border-color: rgba(255, 208, 111, 0.4);
+}
+
+.status-badge.completed {
+  background: rgba(78, 208, 154, 0.2);
+  border-color: rgba(88, 220, 168, 0.44);
+}
+
+.order-actions select,
+.order-actions button {
+  min-height: 38px;
+  padding: 8px 10px;
+}
+
+.orders-empty {
+  text-align: center;
+  padding: 20px;
+}
+
+@media (max-width: 768px) {
+  .toolbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .order-title {
+    font-size: 1rem;
+  }
+
+  .order-meta,
+  .order-items {
+    font-size: 0.86rem;
+  }
+
+  .order-actions {
+    align-items: stretch;
+    width: 100%;
+  }
+
+  .order-actions select,
+  .order-actions button {
+    flex: 1;
+  }
+}
+
+@media (max-width: 480px) {
+  main {
+    padding: 30px 14px;
+  }
+
+  h2 {
+    font-size: 1.4rem;
+    margin-bottom: 16px;
+  }
+
+  .order-card {
+    padding: 12px;
+  }
+
+  .status-badge {
+    font-size: 0.72rem;
+  }
+}
