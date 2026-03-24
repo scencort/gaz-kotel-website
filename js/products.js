@@ -1,4 +1,16 @@
 (function () {
+  const PRODUCTS_API_URL = '/api/products';
+
+  function applyProducts(data) {
+    const list = Array.isArray(data) ? data : [];
+    window.PRODUCTS = list;
+    window.PRODUCTS_MAP = list.reduce(function (acc, product) {
+      acc[product.id] = product;
+      return acc;
+    }, {});
+    window.dispatchEvent(new CustomEvent('products:updated', { detail: { count: list.length } }));
+  }
+
   const products = [
     {
       id: "boiler1",
@@ -182,9 +194,21 @@
     }
   ];
 
-  window.PRODUCTS = products;
-  window.PRODUCTS_MAP = products.reduce(function (acc, product) {
-    acc[product.id] = product;
-    return acc;
-  }, {});
+  applyProducts(products);
+
+  fetch(PRODUCTS_API_URL)
+    .then(function (response) {
+      if (!response.ok) {
+        throw new Error('HTTP ' + response.status);
+      }
+      return response.json();
+    })
+    .then(function (remoteProducts) {
+      if (Array.isArray(remoteProducts) && remoteProducts.length) {
+        applyProducts(remoteProducts);
+      }
+    })
+    .catch(function (error) {
+      console.warn('Не удалось загрузить товары из API, используется локальный список.', error);
+    });
 })();

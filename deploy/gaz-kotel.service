@@ -1,0 +1,18 @@
+[Unit]
+Description=Gaz Kotel Website (Node.js + PostgreSQL)
+After=network.target
+
+[Service]
+Type=simple
+User=www-data
+Group=www-data
+WorkingDirectory=/var/www/gaz-kotel-website
+EnvironmentFile=/var/www/gaz-kotel-website/.env
+ExecStart=/usr/bin/node /var/www/gaz-kotel-website/server.js
+Restart=always
+RestartSec=5
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

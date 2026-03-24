@@ -1,19 +1,35 @@
 (function () {
+  const CONTACTS_API_URL = '/api/contacts';
+
   function bindContactForm() {
     const form = document.getElementById('contactForm');
     if (!form) {
       return;
     }
 
-    form.addEventListener('submit', function (e) {
+    form.addEventListener('submit', async function (e) {
       e.preventDefault();
 
       const formData = new FormData(form);
       const data = Object.fromEntries(formData);
-      console.log('Отправка формы:', data);
 
-      alert('Спасибо за обращение! Мы свяжемся с вами в ближайшее время.');
-      form.reset();
+      try {
+        const response = await fetch(CONTACTS_API_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+
+        if (!response.ok) {
+          throw new Error('HTTP ' + response.status);
+        }
+
+        alert('Спасибо за обращение! Мы свяжемся с вами в ближайшее время.');
+        form.reset();
+      } catch (error) {
+        console.error('Ошибка отправки формы:', error);
+        alert('Не удалось отправить сообщение. Попробуйте позже.');
+      }
     });
   }
 

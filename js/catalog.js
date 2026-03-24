@@ -1,6 +1,7 @@
 (function () {
-  const products = window.PRODUCTS || [];
   const FAVORITES_KEY = 'favorites';
+  const FAVORITES_API_URL = '/api/favorites';
+  const clientId = window.getClientId ? window.getClientId() : 'anonymous';
   const state = {
     search: '',
     maxPrice: '',
@@ -9,6 +10,7 @@
     sort: 'popular'
   };
   let quickViewProductId = null;
+  let favoritesCache = new Set();
 
   function parseSpecValue(specs, keyword) {
     const line = specs.find(function (entry) {
@@ -28,19 +30,64 @@
   }
 
   function getFavoritesSet() {
-    try {
-      const raw = JSON.parse(localStorage.getItem(FAVORITES_KEY)) || [];
-      return new Set(raw);
-    } catch (_error) {
-      return new Set();
-    }
+    return new Set(favoritesCache);
   }
 
   function saveFavorites(set) {
+    favoritesCache = new Set(set);
     localStorage.setItem(FAVORITES_KEY, JSON.stringify(Array.from(set)));
   }
 
+  async function syncFavoritesFromApi() {
+    try {
+      const response = await fetch(FAVORITES_API_URL + '?clientId=' + encodeURIComponent(clientId));
+      if (!response.ok) {
+        throw new Error('HTTP ' + response.status);
+      }
+
+      const ids = await response.json();
+      const set = new Set(Array.isArray(ids) ? ids : []);
+      saveFavorites(set);
+      return set;
+    } catch (_error) {
+      try {
+        const raw = JSON.parse(localStorage.getItem(FAVORITES_KEY)) || [];
+        const set = new Set(raw);
+        saveFavorites(set);
+        return set;
+      } catch (_fallbackError) {
+        const empty = new Set();
+        saveFavorites(empty);
+        return empty;
+      }
+    }
+  }
+
+  async function addFavoriteToApi(productId) {
+    const response = await fetch(FAVORITES_API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ clientId: clientId, productId: productId })
+    });
+
+    if (!response.ok) {
+      throw new Error('HTTP ' + response.status);
+    }
+  }
+
+  async function removeFavoriteFromApi(productId) {
+    const response = await fetch(
+      FAVORITES_API_URL + '/' + encodeURIComponent(productId) + '?clientId=' + encodeURIComponent(clientId),
+      { method: 'DELETE' }
+    );
+
+    if (!response.ok) {
+      throw new Error('HTTP ' + response.status);
+    }
+  }
+
   function filterAndSortProducts() {
+    const products = window.PRODUCTS || [];
     const query = state.search.toLowerCase();
 
     let filtered = products.filter(function (product) {
@@ -96,6 +143,7 @@
   function renderProducts() {
     const productList = document.getElementById('productList');
     productList.innerHTML = '';
+    const products = window.PRODUCTS || [];
 
     if (!products.length) {
       productList.innerHTML = '<p>Каталог временно недоступен. Обновите страницу.</p>';
@@ -140,21 +188,33 @@
 
   function attachFavoriteHandlers() {
     document.querySelectorAll('.btn-favorite').forEach(function (button) {
-      button.addEventListener('click', function () {
+      button.addEventListener('click', async function () {
         const id = this.dataset.id;
         const favorites = getFavoritesSet();
         const product = window.PRODUCTS_MAP ? window.PRODUCTS_MAP[id] : null;
 
         if (favorites.has(id)) {
-          favorites.delete(id);
-          this.classList.remove('active');
-          this.textContent = 'В избранное';
-          showToast('Удалено из избранного');
+          try {
+            await removeFavoriteFromApi(id);
+            favorites.delete(id);
+            this.classList.remove('active');
+            this.textContent = 'В избранное';
+            showToast('Удалено из избранного');
+          } catch (error) {
+            console.error('Ошибка удаления из избранного:', error);
+            showToast('Не удалось обновить избранное', false);
+          }
         } else {
-          favorites.add(id);
-          this.classList.add('active');
-          this.textContent = 'В избранном';
-          showToast((product ? product.name : 'Товар') + ' добавлен в избранное');
+          try {
+            await addFavoriteToApi(id);
+            favorites.add(id);
+            this.classList.add('active');
+            this.textContent = 'В избранном';
+            showToast((product ? product.name : 'Товар') + ' добавлен в избранное');
+          } catch (error) {
+            console.error('Ошибка добавления в избранное:', error);
+            showToast('Не удалось обновить избранное', false);
+          }
         }
 
         saveFavorites(favorites);
@@ -364,7 +424,9 @@
   document.addEventListener('DOMContentLoaded', function () {
     bindQuickViewStaticActions();
     bindCatalogControls();
-    renderProducts();
+    syncFavoritesFromApi().then(function () {
+      renderProducts();
+    });
     updateCartBadge();
 
     if (window.AOS) {
@@ -372,5 +434,9 @@
         window.AOS.refresh();
       }, 100);
     }
+  });
+
+  window.addEventListener('products:updated', function () {
+    renderProducts();
   });
 })();

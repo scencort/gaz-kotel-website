@@ -1,7 +1,9 @@
 (function () {
   const FAVORITES_KEY = 'favorites';
+  const FAVORITES_API_URL = '/api/favorites';
+  const clientId = window.getClientId ? window.getClientId() : 'anonymous';
 
-  function getFavorites() {
+  function getLocalFavorites() {
     try {
       return JSON.parse(localStorage.getItem(FAVORITES_KEY)) || [];
     } catch (_error) {
@@ -9,8 +11,40 @@
     }
   }
 
-  function saveFavorites(ids) {
+  function saveLocalFavorites(ids) {
     localStorage.setItem(FAVORITES_KEY, JSON.stringify(ids));
+  }
+
+  async function getFavorites() {
+    try {
+      const response = await fetch(FAVORITES_API_URL + '?clientId=' + encodeURIComponent(clientId));
+      if (!response.ok) {
+        throw new Error('HTTP ' + response.status);
+      }
+
+      const ids = await response.json();
+      saveLocalFavorites(ids);
+      return ids;
+    } catch (_error) {
+      return getLocalFavorites();
+    }
+  }
+
+  async function removeFavorite(productId) {
+    try {
+      const response = await fetch(
+        FAVORITES_API_URL + '/' + encodeURIComponent(productId) + '?clientId=' + encodeURIComponent(clientId),
+        { method: 'DELETE' }
+      );
+      if (!response.ok) {
+        throw new Error('HTTP ' + response.status);
+      }
+    } catch (_error) {
+      const favorites = getLocalFavorites().filter(function (itemId) {
+        return itemId !== productId;
+      });
+      saveLocalFavorites(favorites);
+    }
   }
 
   function showToast(message) {
@@ -48,13 +82,13 @@
     showToast(product.name + ' добавлен в корзину');
   }
 
-  function renderFavorites() {
+  async function renderFavorites() {
     const list = document.getElementById('favoritesList');
     if (!list) {
       return;
     }
 
-    const favoriteIds = getFavorites();
+    const favoriteIds = await getFavorites();
     list.innerHTML = '';
 
     if (!favoriteIds.length) {
@@ -103,14 +137,10 @@
     });
 
     document.querySelectorAll('[data-role="remove"]').forEach(function (button) {
-      button.addEventListener('click', function () {
+      button.addEventListener('click', async function () {
         const id = this.dataset.id;
-        const favorites = getFavorites().filter(function (itemId) {
-          return itemId !== id;
-        });
-
-        saveFavorites(favorites);
-        renderFavorites();
+        await removeFavorite(id);
+        await renderFavorites();
         showToast('Товар удалён из избранного');
       });
     });
@@ -123,5 +153,9 @@
         window.AOS.refresh();
       }, 100);
     }
+  });
+
+  window.addEventListener('products:updated', function () {
+    renderFavorites();
   });
 })();

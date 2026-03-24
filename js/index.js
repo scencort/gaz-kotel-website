@@ -36,4 +36,8 @@
       window.AOS.refresh();
     }
   });
+
+  window.addEventListener('products:updated', function () {
+    renderHighlights();
+  });
 })();

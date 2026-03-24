@@ -1,5 +1,25 @@
 (function () {
   const API_URL = '/api/orders';
+  const ADMIN_KEY_STORAGE = 'adminApiKey';
+
+  function getAdminKeyFromUrl() {
+    const url = new URL(window.location.href);
+    const key = url.searchParams.get('key');
+    if (key) {
+      localStorage.setItem(ADMIN_KEY_STORAGE, key);
+      url.searchParams.delete('key');
+      window.history.replaceState({}, '', url.pathname + url.search + url.hash);
+      return key;
+    }
+
+    return '';
+  }
+
+  function getAdminHeaders() {
+    const keyFromUrl = getAdminKeyFromUrl();
+    const key = keyFromUrl || localStorage.getItem(ADMIN_KEY_STORAGE) || '';
+    return key ? { 'x-admin-key': key } : {};
+  }
 
   function formatPrice(value) {
     return Number(value || 0).toLocaleString('ru-RU') + ' ₽';
@@ -19,8 +39,13 @@
   }
 
   async function fetchOrders() {
-    const response = await fetch(API_URL);
+    const response = await fetch(API_URL, {
+      headers: getAdminHeaders()
+    });
     if (!response.ok) {
+      if (response.status === 401) {
+        throw new Error('Требуется ключ администратора');
+      }
       throw new Error('Не удалось загрузить заказы');
     }
 
@@ -30,12 +55,27 @@
   async function updateOrderStatus(orderNumber, status) {
     const response = await fetch(API_URL + '/' + orderNumber + '/status', {
       method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
+      headers: Object.assign({ 'Content-Type': 'application/json' }, getAdminHeaders()),
       body: JSON.stringify({ status: status })
     });
 
     if (!response.ok) {
+      if (response.status === 401) {
+        throw new Error('Требуется ключ администратора');
+      }
       throw new Error('Не удалось обновить статус');
+    }
+  }
+
+  function ensureAdminKey() {
+    const key = localStorage.getItem(ADMIN_KEY_STORAGE);
+    if (key) {
+      return;
+    }
+
+    const entered = window.prompt('Введите ключ администратора (x-admin-key), если включена защита API:', '');
+    if (entered) {
+      localStorage.setItem(ADMIN_KEY_STORAGE, entered.trim());
     }
   }
 
@@ -125,6 +165,8 @@
   }
 
   document.addEventListener('DOMContentLoaded', function () {
+    ensureAdminKey();
+
     const refreshBtn = document.getElementById('refreshBtn');
     if (refreshBtn) {
       refreshBtn.addEventListener('click', loadOrders);

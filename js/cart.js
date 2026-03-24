@@ -1,6 +1,5 @@
 (function () {
   const cart = JSON.parse(localStorage.getItem('cart')) || [];
-  const productsMap = window.PRODUCTS_MAP || {};
   const ORDER_API_URL = '/api/orders';
   const DELIVERY_FEE = 700;
   const FREE_DELIVERY_FROM = 80000;
@@ -29,6 +28,7 @@
   }
 
   function getItemMeta(item) {
+    const productsMap = window.PRODUCTS_MAP || {};
     const product = productsMap[item.id] || null;
     return {
       name: item.name || (product ? product.name : 'Без названия'),

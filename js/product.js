@@ -1,7 +1,24 @@
 (function () {
+  let currentProductId = null;
+
   function getQueryParam(param) {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get(param);
+  }
+
+  function bindBackButton() {
+    const backButton = document.getElementById('backButton');
+    if (!backButton) {
+      return;
+    }
+
+    backButton.addEventListener('click', function () {
+      if (window.history.length > 1) {
+        window.history.back();
+      } else {
+        window.location.href = 'catalog.html';
+      }
+    });
   }
 
   function renderProduct(productId) {
@@ -32,27 +49,24 @@
       '<ul>' + specsHtml + '</ul>' +
       '<strong>Цена: ' + formattedPrice + '</strong>';
 
+    bindBackButton();
+
     document.title = 'Газ-Котёл | ' + product.name;
   }
 
   document.addEventListener('DOMContentLoaded', function () {
-    const productId = getQueryParam('id');
-    if (!productId) {
+    currentProductId = getQueryParam('id');
+    if (!currentProductId) {
       document.getElementById('product-container').innerHTML = '<p class="error-message">Ошибка: не указан продукт.</p>';
       return;
     }
 
-    renderProduct(productId);
+    renderProduct(currentProductId);
+  });
 
-    const backButton = document.getElementById('backButton');
-    if (backButton) {
-      backButton.addEventListener('click', function () {
-        if (window.history.length > 1) {
-          window.history.back();
-        } else {
-          window.location.href = 'catalog.html';
-        }
-      });
+  window.addEventListener('products:updated', function () {
+    if (currentProductId) {
+      renderProduct(currentProductId);
     }
   });
 })();
