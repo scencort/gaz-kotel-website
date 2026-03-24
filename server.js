@@ -138,6 +138,39 @@ function mapProductRow(row) {
   };
 }
 
+function mapAdminProductPayload(payload) {
+  const raw = payload || {};
+  const description = Array.isArray(raw.description) ? raw.description : String(raw.description || '').split('\n');
+  const specs = Array.isArray(raw.specs) ? raw.specs : String(raw.specs || '').split('\n');
+
+  return {
+    id: String(raw.id || '').trim(),
+    name: String(raw.name || '').trim(),
+    shortDescription: String(raw.shortDescription || '').trim(),
+    description: description.map(item => String(item || '').trim()).filter(Boolean),
+    specs: specs.map(item => String(item || '').trim()).filter(Boolean),
+    price: Number(raw.price),
+    image: String(raw.image || '').trim(),
+    isFeatured: Boolean(raw.isFeatured)
+  };
+}
+
+function validateAdminProduct(payload, isCreate) {
+  if (!payload.name || !payload.shortDescription || !payload.image) {
+    return 'name, shortDescription and image are required';
+  }
+
+  if (isCreate && !payload.id) {
+    return 'id is required';
+  }
+
+  if (!Number.isFinite(payload.price) || payload.price < 0) {
+    return 'price must be a non-negative number';
+  }
+
+  return null;
+}
+
 function formatPrice(value) {
   return Number(value || 0).toLocaleString('ru-RU') + ' ₽';
 }
@@ -200,24 +233,28 @@ async function notifyOrderCreated(orderPayload, orderNumber) {
     : '<b>Промокод:</b> —';
 
   const text = [
-    '🧾 <b>Новый заказ с сайта</b>',
-    `Номер: <b>#${escapeHtml(orderNumber)}</b>`,
+    '🔴 <b>НОВЫЙ ЗАКАЗ</b> 🔴',
+    `📌 Номер: <b>#${escapeHtml(orderNumber)}</b>`,
     '',
     '👤 <b>Клиент</b>',
-    `• Имя: ${escapeHtml(customer.name)}`,
-    `• Телефон: ${escapeHtml(customer.phone)}`,
-    `• Email: ${escapeHtml(customer.email)}`,
-    customer.telegram ? `• Telegram: ${escapeHtml(customer.telegram)}` : null,
+    `▫️ Имя: <b>${escapeHtml(customer.name)}</b>`,
+    `▫️ Телефон: <b>${escapeHtml(customer.phone)}</b>`,
+    `▫️ Email: ${escapeHtml(customer.email)}`,
+    customer.telegram ? `▫️ Telegram: ${escapeHtml(customer.telegram)}` : null,
     '',
     '🛒 <b>Состав заказа</b>',
     lines.length ? lines.join('\n') : '• Нет позиций',
     '',
     '💰 <b>Оплата</b>',
-    `<b>Товары:</b> ${formatPrice(pricing.subtotal)}`,
-    promoLine,
-    `<b>Скидка:</b> -${formatPrice(pricing.discount)}`,
-    `<b>Доставка:</b> ${Number(pricing.delivery || 0) === 0 ? 'Бесплатно' : formatPrice(pricing.delivery)}`,
-    `🏁 <b>Итого к оплате: ${formatPrice(pricing.total)}</b>`
+    `▫️ Товары: ${formatPrice(pricing.subtotal)}`,
+    `▫️ ${promoLine.replace('<b>Промокод:</b> ', 'Промокод: ')}`,
+    `▫️ Скидка: -${formatPrice(pricing.discount)}`,
+    `▫️ Доставка: ${Number(pricing.delivery || 0) === 0 ? 'Бесплатно' : formatPrice(pricing.delivery)}`,
+    '',
+    '🚨 <b>ИТОГО К ОПЛАТЕ</b>',
+    `🔻 <b>${formatPrice(pricing.total)}</b>`,
+    '',
+    '⚠️ <i>Пожалуйста, свяжитесь с клиентом как можно скорее.</i>'
   ].filter(Boolean).join('\n');
 
   await sendTelegramMessage(text);
@@ -232,9 +269,9 @@ async function notifyOrderStatusChanged(orderNumber, status) {
   const statusEmoji = formatOrderStatusEmoji(status);
 
   const text = [
-    `${statusEmoji} <b>Статус заказа изменен</b>`,
-    `Номер: <b>#${escapeHtml(orderNumber)}</b>`,
-    `Текущий статус: <b>${escapeHtml(statusLabel)}</b>`
+    `🔴 <b>ОБНОВЛЕНИЕ СТАТУСА</b> ${statusEmoji}`,
+    `📌 Заказ: <b>#${escapeHtml(orderNumber)}</b>`,
+    `📍 Текущий статус: <b>${escapeHtml(statusLabel)}</b>`
   ].join('\n');
 
   await sendTelegramMessage(text);
@@ -324,6 +361,15 @@ function serveStatic(req, res) {
   ) {
     sendText(res, 403, 'Forbidden');
     return;
+  }
+
+  if (relativePath === 'admin.html' && ADMIN_API_KEY) {
+    const keyFromQuery = parsedUrl.searchParams.get('key') || '';
+    if (keyFromQuery !== ADMIN_API_KEY) {
+      // Маскируем наличие админки как обычный not found.
+      sendText(res, 404, 'Not Found');
+      return;
+    }
   }
 
   fs.stat(requestedPath, (statError, stats) => {
@@ -656,6 +702,128 @@ async function createReview(req, res) {
   sendJson(res, 201, { message: 'Review created' });
 }
 
+async function getAdminSummary(res) {
+  const [orders, products, contacts, reviews] = await Promise.all([
+    pool.query('SELECT COUNT(*)::int AS count FROM orders'),
+    pool.query('SELECT COUNT(*)::int AS count FROM products'),
+    pool.query('SELECT COUNT(*)::int AS count FROM contact_messages'),
+    pool.query('SELECT COUNT(*)::int AS count FROM reviews')
+  ]);
+
+  sendJson(res, 200, {
+    orders: orders.rows[0].count,
+    products: products.rows[0].count,
+    contacts: contacts.rows[0].count,
+    reviews: reviews.rows[0].count
+  });
+}
+
+async function getAdminProducts(res) {
+  const result = await pool.query(
+    `
+    SELECT id, name, short_description, description, specs, price, image, is_featured
+    FROM products
+    ORDER BY created_at ASC
+    `
+  );
+
+  sendJson(res, 200, result.rows.map(mapProductRow));
+}
+
+async function createAdminProduct(req, res) {
+  const payload = mapAdminProductPayload(await parseBody(req));
+  const validationError = validateAdminProduct(payload, true);
+  if (validationError) {
+    sendJson(res, 400, { message: validationError });
+    return;
+  }
+
+  await pool.query(
+    `
+    INSERT INTO products (id, name, short_description, description, specs, price, image, is_featured)
+    VALUES ($1, $2, $3, $4::jsonb, $5::jsonb, $6, $7, $8)
+    `,
+    [
+      payload.id,
+      payload.name,
+      payload.shortDescription,
+      JSON.stringify(payload.description),
+      JSON.stringify(payload.specs),
+      payload.price,
+      payload.image,
+      payload.isFeatured
+    ]
+  );
+
+  sendJson(res, 201, { message: 'Product created' });
+}
+
+async function updateAdminProduct(req, res, productId) {
+  const payload = mapAdminProductPayload(await parseBody(req));
+  const validationError = validateAdminProduct(payload, false);
+  if (validationError) {
+    sendJson(res, 400, { message: validationError });
+    return;
+  }
+
+  const result = await pool.query(
+    `
+    UPDATE products
+    SET
+      name = $1,
+      short_description = $2,
+      description = $3::jsonb,
+      specs = $4::jsonb,
+      price = $5,
+      image = $6,
+      is_featured = $7
+    WHERE id = $8
+    `,
+    [
+      payload.name,
+      payload.shortDescription,
+      JSON.stringify(payload.description),
+      JSON.stringify(payload.specs),
+      payload.price,
+      payload.image,
+      payload.isFeatured,
+      productId
+    ]
+  );
+
+  if (!result.rowCount) {
+    sendJson(res, 404, { message: 'Product not found' });
+    return;
+  }
+
+  sendJson(res, 200, { message: 'Product updated' });
+}
+
+async function deleteAdminProduct(res, productId) {
+  const result = await pool.query('DELETE FROM products WHERE id = $1', [productId]);
+  if (!result.rowCount) {
+    sendJson(res, 404, { message: 'Product not found' });
+    return;
+  }
+
+  sendJson(res, 200, { message: 'Product deleted' });
+}
+
+async function getAdminContacts(res, parsedUrl) {
+  const limit = Math.min(Math.max(Number(parsedUrl.searchParams.get('limit') || 50), 1), 200);
+  const result = await pool.query(
+    `
+    SELECT id, name, phone, email, message, created_at
+    FROM contact_messages
+    ORDER BY created_at DESC
+    LIMIT $1
+    `,
+    [limit]
+  );
+
+  sendJson(res, 200, result.rows);
+}
+
 const server = http.createServer(async (req, res) => {
   const parsedUrl = new URL(req.url, `http://${req.headers.host}`);
 
@@ -684,6 +852,70 @@ const server = http.createServer(async (req, res) => {
       }
 
       await getOrders(res);
+      return;
+    }
+
+    if (req.method === 'GET' && parsedUrl.pathname === '/api/admin/summary') {
+      if (!requireAdminAuth(req)) {
+        sendJson(res, 401, { message: 'Unauthorized' });
+        return;
+      }
+
+      await getAdminSummary(res);
+      return;
+    }
+
+    if (req.method === 'GET' && parsedUrl.pathname === '/api/admin/products') {
+      if (!requireAdminAuth(req)) {
+        sendJson(res, 401, { message: 'Unauthorized' });
+        return;
+      }
+
+      await getAdminProducts(res);
+      return;
+    }
+
+    if (req.method === 'POST' && parsedUrl.pathname === '/api/admin/products') {
+      if (!requireAdminAuth(req)) {
+        sendJson(res, 401, { message: 'Unauthorized' });
+        return;
+      }
+
+      await createAdminProduct(req, res);
+      return;
+    }
+
+    if (req.method === 'PUT' && /^\/api\/admin\/products\/[^/]+$/.test(parsedUrl.pathname)) {
+      if (!requireAdminAuth(req)) {
+        sendJson(res, 401, { message: 'Unauthorized' });
+        return;
+      }
+
+      const match = parsedUrl.pathname.match(/^\/api\/admin\/products\/([^/]+)$/);
+      const productId = match ? decodeURIComponent(match[1]) : '';
+      await updateAdminProduct(req, res, productId);
+      return;
+    }
+
+    if (req.method === 'DELETE' && /^\/api\/admin\/products\/[^/]+$/.test(parsedUrl.pathname)) {
+      if (!requireAdminAuth(req)) {
+        sendJson(res, 401, { message: 'Unauthorized' });
+        return;
+      }
+
+      const match = parsedUrl.pathname.match(/^\/api\/admin\/products\/([^/]+)$/);
+      const productId = match ? decodeURIComponent(match[1]) : '';
+      await deleteAdminProduct(res, productId);
+      return;
+    }
+
+    if (req.method === 'GET' && parsedUrl.pathname === '/api/admin/contacts') {
+      if (!requireAdminAuth(req)) {
+        sendJson(res, 401, { message: 'Unauthorized' });
+        return;
+      }
+
+      await getAdminContacts(res, parsedUrl);
       return;
     }
 

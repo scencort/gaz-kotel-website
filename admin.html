@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Панель заказов Газ-Котёл." />
-  <title>Газ-Котёл | Заказы</title>
+  <meta name="description" content="Админ-панель Газ-Котёл." />
+  <title>Газ-Котёл | Админ-панель</title>
   <link rel="icon" type="image/svg+xml" href="images/logo-boiler.svg">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/common.css" />
@@ -24,7 +24,6 @@
       <a href="favorites.html">Избранное</a>
       <a href="about.html">О нас</a>
       <a href="contacts.html">Контакты</a>
-      <a href="admin.html" class="active">Заказы</a>
     </nav>
     <a href="cart.html" class="cart-icon" title="Корзина">
       <img src="images/korzina.png" alt="Корзина" />
@@ -32,13 +31,88 @@
   </header>
 
   <main>
-    <h2>Управление заказами</h2>
+    <h2>Админ-панель</h2>
+
+    <section class="auth-card">
+      <h3>Вход</h3>
+      <p class="auth-help">Введите ключ администратора (переменная ADMIN_API_KEY на сервере/локально).</p>
+      <div class="auth-row">
+        <input id="adminKeyInput" type="password" placeholder="Ключ администратора" autocomplete="off" />
+        <button id="saveAdminKeyBtn" type="button">Сохранить ключ</button>
+        <button id="clearAdminKeyBtn" type="button" class="btn-secondary">Очистить</button>
+      </div>
+      <p id="adminAuthStatus" class="auth-status" aria-live="polite"></p>
+    </section>
+
     <div class="toolbar">
-      <button id="refreshBtn" type="button">Обновить</button>
+      <button id="refreshBtn" type="button">Обновить данные</button>
       <span id="adminStatus" aria-live="polite"></span>
     </div>
 
-    <section id="ordersList" class="orders-list"></section>
+    <section class="summary-grid" id="summaryGrid">
+      <article class="summary-card"><h4>Заказы</h4><p id="summaryOrders">0</p></article>
+      <article class="summary-card"><h4>Товары</h4><p id="summaryProducts">0</p></article>
+      <article class="summary-card"><h4>Обращения</h4><p id="summaryContacts">0</p></article>
+      <article class="summary-card"><h4>Отзывы</h4><p id="summaryReviews">0</p></article>
+    </section>
+
+    <section class="tabs">
+      <button type="button" data-tab="orders" class="active">Заказы</button>
+      <button type="button" data-tab="products">Товары</button>
+      <button type="button" data-tab="contacts">Обращения</button>
+    </section>
+
+    <section id="tab-orders" class="tab-panel active">
+      <h3>Управление заказами</h3>
+      <div id="ordersList" class="orders-list"></div>
+    </section>
+
+    <section id="tab-products" class="tab-panel">
+      <h3>Управление товарами</h3>
+      <form id="productForm" class="product-form">
+        <input type="hidden" id="productMode" value="create" />
+        <div class="form-grid">
+          <label>ID
+            <input id="productId" required placeholder="boiler11" />
+          </label>
+          <label>Название
+            <input id="productName" required placeholder="Название котла" />
+          </label>
+          <label>Короткое описание
+            <input id="productShortDescription" required placeholder="Кратко о товаре" />
+          </label>
+          <label>Цена (₽)
+            <input id="productPrice" type="number" min="0" required />
+          </label>
+          <label>Изображение
+            <input id="productImage" required placeholder="images/boiler11.jpg" />
+          </label>
+          <label class="checkbox-label">Рекомендованный
+            <input id="productIsFeatured" type="checkbox" />
+          </label>
+        </div>
+
+        <label>Описание (каждая строка = пункт)
+          <textarea id="productDescription" rows="4" placeholder="Строка 1&#10;Строка 2"></textarea>
+        </label>
+
+        <label>Характеристики (каждая строка = пункт)
+          <textarea id="productSpecs" rows="4" placeholder="Мощность: 30 кВт&#10;Площадь: до 300 м²"></textarea>
+        </label>
+
+        <div class="form-actions">
+          <button type="submit" id="productSubmitBtn">Добавить товар</button>
+          <button type="button" id="productResetBtn" class="btn-secondary">Сбросить</button>
+        </div>
+      </form>
+
+      <div id="productsList" class="products-list"></div>
+    </section>
+
+    <section id="tab-contacts" class="tab-panel">
+      <h3>Последние обращения</h3>
+      <div id="contactsList" class="contacts-list"></div>
+    </section>
   </main>
 
   <footer>
