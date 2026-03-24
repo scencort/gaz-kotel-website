@@ -1,13 +1,15 @@
 (function () {
   const FAVORITES_KEY = 'favorites';
   const FAVORITES_API_URL = '/api/favorites';
+  const PRODUCTS_PER_PAGE = 6;
   const clientId = window.getClientId ? window.getClientId() : 'anonymous';
   const state = {
     search: '',
     maxPrice: '',
     maxPower: '',
     maxArea: '',
-    sort: 'popular'
+    sort: 'popular',
+    page: 1
   };
   let quickViewProductId = null;
   let favoritesCache = new Set();
@@ -142,24 +144,39 @@
 
   function renderProducts() {
     const productList = document.getElementById('productList');
+    const pagination = document.getElementById('catalogPagination');
     productList.innerHTML = '';
     const products = window.PRODUCTS || [];
 
     if (!products.length) {
       productList.innerHTML = '<p>Каталог временно недоступен. Обновите страницу.</p>';
+      if (pagination) {
+        pagination.innerHTML = '';
+      }
       return;
     }
 
     const list = filterAndSortProducts();
+    const totalPages = Math.max(1, Math.ceil(list.length / PRODUCTS_PER_PAGE));
+
+    if (state.page > totalPages) {
+      state.page = totalPages;
+    }
+
+    const startIndex = (state.page - 1) * PRODUCTS_PER_PAGE;
+    const visibleList = list.slice(startIndex, startIndex + PRODUCTS_PER_PAGE);
 
     if (!list.length) {
       productList.innerHTML = '<div class="product-empty">По выбранным параметрам ничего не найдено. Попробуйте изменить фильтры.</div>';
+      if (pagination) {
+        pagination.innerHTML = '';
+      }
       return;
     }
 
     const favorites = getFavoritesSet();
 
-    list.forEach(function (product, index) {
+    visibleList.forEach(function (product, index) {
       const productCard = document.createElement('div');
       productCard.className = 'product';
       productCard.setAttribute('data-aos', 'zoom-in');
@@ -184,6 +201,92 @@
     attachCartHandlers();
     attachFavoriteHandlers();
     bindQuickViewButtons();
+    renderPagination(totalPages, list.length);
+  }
+
+  function getPaginationItems(totalPages, currentPage) {
+    if (totalPages <= 7) {
+      return Array.from({ length: totalPages }, function (_item, index) {
+        return index + 1;
+      });
+    }
+
+    const pages = [1];
+    const left = Math.max(2, currentPage - 1);
+    const right = Math.min(totalPages - 1, currentPage + 1);
+
+    if (left > 2) {
+      pages.push('...');
+    }
+
+    for (let page = left; page <= right; page += 1) {
+      pages.push(page);
+    }
+
+    if (right < totalPages - 1) {
+      pages.push('...');
+    }
+
+    pages.push(totalPages);
+    return pages;
+  }
+
+  function renderPagination(totalPages, totalItems) {
+    const pagination = document.getElementById('catalogPagination');
+    if (!pagination) {
+      return;
+    }
+
+    if (totalPages <= 1) {
+      pagination.innerHTML = '';
+      return;
+    }
+
+    const items = getPaginationItems(totalPages, state.page);
+    const prevDisabled = state.page <= 1 ? ' disabled' : '';
+    const nextDisabled = state.page >= totalPages ? ' disabled' : '';
+
+    pagination.innerHTML =
+      '<button class="pagination-btn" data-page="' + (state.page - 1) + '"' + prevDisabled + '>Назад</button>' +
+      '<div class="pagination-pages">' +
+      items.map(function (item) {
+        if (item === '...') {
+          return '<span class="pagination-ellipsis">...</span>';
+        }
+
+        const activeClass = item === state.page ? ' active' : '';
+        return '<button class="pagination-btn pagination-num' + activeClass + '" data-page="' + item + '">' + item + '</button>';
+      }).join('') +
+      '</div>' +
+      '<button class="pagination-btn" data-page="' + (state.page + 1) + '"' + nextDisabled + '>Далее</button>' +
+      '<p class="pagination-meta">Страница ' + state.page + ' из ' + totalPages + ' • Товаров: ' + totalItems + '</p>';
+  }
+
+  function bindPaginationControls() {
+    const pagination = document.getElementById('catalogPagination');
+    if (!pagination) {
+      return;
+    }
+
+    pagination.addEventListener('click', function (event) {
+      const target = event.target.closest('.pagination-btn');
+      if (!target || target.disabled) {
+        return;
+      }
+
+      const page = Number(target.dataset.page || 1);
+      if (!Number.isFinite(page) || page < 1 || page === state.page) {
+        return;
+      }
+
+      state.page = page;
+      renderProducts();
+
+      const top = document.querySelector('.catalog-controls');
+      if (top) {
+        top.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
   }
 
   function attachFavoriteHandlers() {
@@ -319,26 +422,31 @@
 
     searchInput.addEventListener('input', function () {
       state.search = this.value.trim();
+      state.page = 1;
       renderProducts();
     });
 
     priceFilter.addEventListener('change', function () {
       state.maxPrice = this.value;
+      state.page = 1;
       renderProducts();
     });
 
     powerFilter.addEventListener('change', function () {
       state.maxPower = this.value;
+      state.page = 1;
       renderProducts();
     });
 
     areaFilter.addEventListener('change', function () {
       state.maxArea = this.value;
+      state.page = 1;
       renderProducts();
     });
 
     sortSelect.addEventListener('change', function () {
       state.sort = this.value;
+      state.page = 1;
       renderProducts();
     });
 
@@ -348,6 +456,7 @@
       state.maxPower = '';
       state.maxArea = '';
       state.sort = 'popular';
+      state.page = 1;
 
       searchInput.value = '';
       priceFilter.value = '';
@@ -430,6 +539,7 @@
   document.addEventListener('DOMContentLoaded', function () {
     bindQuickViewStaticActions();
     bindCatalogControls();
+    bindPaginationControls();
     syncFavoritesFromApi().then(function () {
       renderProducts();
     });
