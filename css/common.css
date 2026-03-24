@@ -273,6 +273,13 @@ h3 {
   color: #f1f6ff;
 }
 
+/* Dark text for headings/text blocks placed directly on the light page background. */
+main > h2,
+main > h3,
+main > p {
+  color: #173a66;
+}
+
 p,
 li,
 label {
