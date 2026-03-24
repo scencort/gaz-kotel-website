@@ -217,6 +217,10 @@ section {
   padding: 12px 14px;
 }
 
+.faq-item[open] {
+  border-color: rgba(172, 210, 255, 0.5);
+}
+
 .faq-item summary {
   cursor: pointer;
   font-weight: 600;
@@ -227,12 +231,120 @@ section {
   margin-top: 10px;
 }
 
+.faq-item-content {
+  margin-top: 10px;
+}
+
+.faq-calc-card {
+  background: rgba(12, 32, 72, 0.66);
+  border: 1px solid rgba(136, 180, 252, 0.24);
+  border-radius: 14px;
+  padding: 14px;
+}
+
+.faq-calc-card h4 {
+  margin-bottom: 8px;
+  font-size: 1.05rem;
+}
+
+.faq-calc-note {
+  margin-bottom: 10px;
+  color: #c8dfff;
+  font-size: 0.9rem;
+}
+
+.faq-calc-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+  align-items: end;
+}
+
+.faq-calc-field {
+  display: grid;
+  gap: 6px;
+}
+
+.faq-calc-field span {
+  font-size: 0.85rem;
+  color: #d8e8ff;
+}
+
+.faq-calc-field input,
+.faq-calc-field select {
+  border-radius: 10px;
+  padding: 10px;
+  border: 1px solid rgba(136, 180, 252, 0.28);
+  background: rgba(8, 24, 58, 0.72);
+  color: #eaf2ff;
+}
+
+.faq-calc-actions {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.faq-calc-actions .btn,
+.faq-calc-actions .btn-primary {
+  display: inline-flex;
+  width: 100%;
+  min-height: 42px;
+  padding: 10px 14px;
+  white-space: normal;
+  text-align: center;
+  border-radius: 999px;
+}
+
+.faq-calc-result {
+  margin-top: 12px;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(145, 188, 255, 0.28);
+  background: rgba(10, 28, 69, 0.56);
+}
+
+.faq-calc-result-main {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #e8f3ff;
+}
+
+.faq-calc-result-hint {
+  margin-top: 4px;
+  font-size: 0.9rem;
+  color: #bddbff;
+}
+
+.faq-calc-models {
+  margin-top: 10px;
+  display: grid;
+  gap: 8px;
+}
+
+.faq-calc-model {
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(145, 188, 255, 0.26);
+  background: rgba(20, 49, 105, 0.52);
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: center;
+}
+
+.faq-calc-model a {
+  text-decoration: none;
+  font-weight: 600;
+}
+
 .btn-primary {
   padding: 12px 24px;
   font-size: 1rem;
   border-radius: 999px;
   text-decoration: none;
-  display: inline-block;
+  display: inline-flex;
 }
 
 @media (max-width: 992px) {
@@ -242,6 +354,14 @@ section {
 
   .reviews-grid {
     grid-template-columns: 1fr;
+  }
+
+  .faq-calc-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .faq-calc-actions {
+    grid-template-columns: 1fr 1fr;
   }
 }
 
@@ -294,6 +414,14 @@ section {
   .review-card p,
   .faq-item p {
     font-size: 0.9rem;
+  }
+
+  .faq-calc-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .faq-calc-actions {
+    grid-template-columns: 1fr;
   }
 
   .highlight-product img {
