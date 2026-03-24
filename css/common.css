@@ -107,7 +107,7 @@ header {
 
 .cart-icon {
   position: absolute;
-  top: 31px;
+  top: 24px;
   right: 24px;
   z-index: 40;
 }
@@ -116,7 +116,7 @@ header {
   width: 38px;
   height: 38px;
   object-fit: contain;
-  filter: brightness(0) saturate(100%) invert(91%) sepia(25%) saturate(600%) hue-rotate(179deg) brightness(102%) contrast(102%);
+  filter: none;
   transition: transform var(--transition), filter var(--transition);
 }
 

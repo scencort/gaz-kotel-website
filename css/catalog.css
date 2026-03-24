@@ -4,7 +4,7 @@ header {
 
 .cart-icon {
   position: absolute;
-  top: 31px;
+  top: 24px;
   right: 24px;
   z-index: 1000;
 }
@@ -19,7 +19,7 @@ header {
   height: 38px;
   object-fit: contain;
   transition: transform var(--transition), filter var(--transition);
-  filter: brightness(0) saturate(100%) invert(89%) sepia(47%) saturate(511%) hue-rotate(181deg) brightness(101%) contrast(98%);
+  filter: none;
 }
 
 .cart-icon img:hover {
@@ -101,6 +101,31 @@ h2 {
 
 .btn-reset {
   height: 42px;
+}
+
+/* Improve contrast for secondary actions in catalog controls and product cards. */
+.catalog-controls .btn-reset,
+.product-actions .btn-details,
+.quick-actions .btn-details {
+  background: linear-gradient(135deg, rgba(95, 146, 230, 0.45), rgba(58, 101, 181, 0.55));
+  border: 1px solid rgba(170, 208, 255, 0.62);
+  color: #ecf5ff;
+  box-shadow: 0 8px 18px rgba(10, 35, 88, 0.32);
+}
+
+.catalog-controls .btn-reset:hover,
+.product-actions .btn-details:hover,
+.quick-actions .btn-details:hover {
+  background: linear-gradient(135deg, rgba(118, 171, 246, 0.58), rgba(72, 121, 208, 0.64));
+  border-color: rgba(196, 224, 255, 0.78);
+  box-shadow: 0 12px 24px rgba(10, 35, 88, 0.4);
+}
+
+.catalog-controls .btn-reset:focus-visible,
+.product-actions .btn-details:focus-visible,
+.quick-actions .btn-details:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(124, 182, 255, 0.38), 0 10px 22px rgba(10, 35, 88, 0.4);
 }
 
 .product-list {

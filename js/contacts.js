@@ -64,8 +64,46 @@
     });
   }
 
+  function updateWorktimeStatus() {
+    const statusNode = document.getElementById('worktimeStatus');
+    const hourHand = document.getElementById('worktimeHourHand');
+    const minuteHand = document.getElementById('worktimeMinuteHand');
+    if (!statusNode) {
+      return;
+    }
+
+    const now = new Date();
+    const hour = now.getHours();
+    const minute = now.getMinutes();
+    const currentMinutes = hour * 60 + minute;
+    const start = 8 * 60;
+    const end = 22 * 60;
+    const isOpen = currentMinutes >= start && currentMinutes < end;
+
+    if (hourHand) {
+      const hourAngle = ((hour % 12) + minute / 60) * 30;
+      hourHand.style.transform = 'translateX(-50%) rotate(' + hourAngle + 'deg)';
+    }
+
+    if (minuteHand) {
+      const minuteAngle = minute * 6;
+      minuteHand.style.transform = 'translateX(-50%) rotate(' + minuteAngle + 'deg)';
+    }
+
+    statusNode.classList.remove('open', 'closed');
+    if (isOpen) {
+      statusNode.textContent = 'Сейчас открыто до 22:00';
+      statusNode.classList.add('open');
+    } else {
+      statusNode.textContent = 'Сейчас закрыто. Откроемся в 08:00';
+      statusNode.classList.add('closed');
+    }
+  }
+
   document.addEventListener('DOMContentLoaded', function () {
     bindContactForm();
     bindPhoneMask();
+    updateWorktimeStatus();
+    setInterval(updateWorktimeStatus, 60000);
   });
 })();
