@@ -47,7 +47,7 @@
       empty.className = 'empty-message';
       empty.textContent = 'Корзина пуста';
       container.appendChild(empty);
-      totalDisplay.innerHTML = '';
+      renderSummary();
       return;
     }
 
