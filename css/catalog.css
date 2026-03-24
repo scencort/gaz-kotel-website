@@ -19,7 +19,7 @@ header {
   height: 40px;
   object-fit: contain;
   transition: transform var(--transition), filter var(--transition);
-  filter: brightness(0) saturate(100%) invert(89%) sepia(47%) saturate(511%) hue-rotate(181deg) brightness(101%) contrast(98%);
+  filter: brightness(0) saturate(100%) invert(19%) sepia(29%) saturate(1336%) hue-rotate(182deg) brightness(93%) contrast(92%);
 }
 
 .cart-icon img:hover {
@@ -89,7 +89,7 @@ h2 {
 
 .control-field span {
   font-size: 0.85rem;
-  color: #cfe4ff;
+  color: #365a86;
 }
 
 .control-field input,
@@ -162,7 +162,7 @@ h2 {
 .price {
   font-weight: 700;
   margin-bottom: var(--space-sm);
-  color: #dceeff;
+  color: #1f4e84;
 }
 
 .product-actions {
