@@ -8,6 +8,8 @@
     maxPrice: '',
     maxPower: '',
     maxArea: '',
+    series: '',
+    chamber: '',
     sort: 'popular',
     page: 1
   };
@@ -29,6 +31,34 @@
     }
 
     return parseFloat(match[1].replace(',', '.'));
+  }
+
+  function escapeHtml(value) {
+    return String(value || '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  function getSpecLine(specs, keyword) {
+    return (specs || []).find(function (entry) {
+      return entry.toLowerCase().indexOf(keyword) !== -1;
+    }) || '';
+  }
+
+  function getSeriesFromName(name) {
+    const value = String(name || '').toLowerCase();
+    if (value.indexOf('аогв') !== -1) {
+      return 'aogv';
+    }
+
+    if (value.indexOf('ишма') !== -1) {
+      return 'ishma';
+    }
+
+    return '';
   }
 
   function getFavoritesSet() {
@@ -118,6 +148,20 @@
         return false;
       }
 
+      if (state.series && getSeriesFromName(product.name) !== state.series) {
+        return false;
+      }
+
+      if (state.chamber) {
+        const chamberLine = getSpecLine(product.specs, 'тип камеры сгорания').toLowerCase();
+        const isOpen = chamberLine.indexOf('открытая') !== -1;
+        const isClosed = chamberLine.indexOf('закрытая') !== -1;
+
+        if ((state.chamber === 'open' && !isOpen) || (state.chamber === 'closed' && !isClosed)) {
+          return false;
+        }
+      }
+
       if (!query) {
         return true;
       }
@@ -137,6 +181,24 @@
       filtered.sort(function (a, b) { return b.price - a.price; });
     } else if (state.sort === 'nameAsc') {
       filtered.sort(function (a, b) { return a.name.localeCompare(b.name, 'ru'); });
+    } else if (state.sort === 'nameDesc') {
+      filtered.sort(function (a, b) { return b.name.localeCompare(a.name, 'ru'); });
+    } else if (state.sort === 'powerAsc') {
+      filtered.sort(function (a, b) {
+        return parseSpecValue(a.specs || [], 'мощность') - parseSpecValue(b.specs || [], 'мощность');
+      });
+    } else if (state.sort === 'powerDesc') {
+      filtered.sort(function (a, b) {
+        return parseSpecValue(b.specs || [], 'мощность') - parseSpecValue(a.specs || [], 'мощность');
+      });
+    } else if (state.sort === 'areaAsc') {
+      filtered.sort(function (a, b) {
+        return parseSpecValue(a.specs || [], 'площадь обогрева') - parseSpecValue(b.specs || [], 'площадь обогрева');
+      });
+    } else if (state.sort === 'areaDesc') {
+      filtered.sort(function (a, b) {
+        return parseSpecValue(b.specs || [], 'площадь обогрева') - parseSpecValue(a.specs || [], 'площадь обогрева');
+      });
     }
 
     return filtered;
@@ -182,17 +244,21 @@
       productCard.setAttribute('data-aos', 'zoom-in');
       productCard.setAttribute('data-aos-delay', String(index * 50));
       const isFavorite = favorites.has(product.id);
+      const safeId = encodeURIComponent(product.id || '');
+      const safeName = escapeHtml(product.name || 'Без названия');
+      const safeDescription = escapeHtml(product.shortDescription || '');
+      const safeImage = escapeHtml(product.image || '');
 
       productCard.innerHTML =
-        '<img src="' + product.image + '" alt="' + product.name + '">' +
-        '<h3>' + product.name + '</h3>' +
-        '<p>' + product.shortDescription + '</p>' +
+        '<img src="' + safeImage + '" alt="' + safeName + '">' +
+        '<h3>' + safeName + '</h3>' +
+        '<p>' + safeDescription + '</p>' +
         '<div class="price">' + product.price.toLocaleString('ru-RU') + ' ₽</div>' +
         '<div class="product-actions">' +
-          '<a href="product.html?id=' + product.id + '" class="btn btn-details">Подробнее</a>' +
-          '<button class="btn btn-details btn-quick" data-id="' + product.id + '">Быстрый просмотр</button>' +
-          '<button class="btn btn-favorite' + (isFavorite ? ' active' : '') + '" data-id="' + product.id + '">' + (isFavorite ? 'В избранном' : 'В избранное') + '</button>' +
-          '<button class="btn btn-cart" data-id="' + product.id + '" data-name="' + product.name + '" data-price="' + product.price + '">В корзину</button>' +
+          '<a href="product.html?id=' + safeId + '" class="btn btn-details">Подробнее</a>' +
+          '<button class="btn btn-details btn-quick" data-id="' + safeId + '">Быстрый просмотр</button>' +
+          '<button class="btn btn-favorite' + (isFavorite ? ' active' : '') + '" data-id="' + safeId + '">' + (isFavorite ? 'В избранном' : 'В избранное') + '</button>' +
+          '<button class="btn btn-cart" data-id="' + safeId + '" data-name="' + safeName + '" data-price="' + product.price + '">В корзину</button>' +
         '</div>';
 
       productList.appendChild(productCard);
@@ -413,10 +479,12 @@
     const priceFilter = document.getElementById('priceFilter');
     const powerFilter = document.getElementById('powerFilter');
     const areaFilter = document.getElementById('areaFilter');
+    const seriesFilter = document.getElementById('seriesFilter');
+    const chamberFilter = document.getElementById('chamberFilter');
     const sortSelect = document.getElementById('sortSelect');
     const resetFilters = document.getElementById('resetFilters');
 
-    if (!searchInput || !priceFilter || !powerFilter || !areaFilter || !sortSelect || !resetFilters) {
+    if (!searchInput || !priceFilter || !powerFilter || !areaFilter || !seriesFilter || !chamberFilter || !sortSelect || !resetFilters) {
       return;
     }
 
@@ -444,6 +512,18 @@
       renderProducts();
     });
 
+    seriesFilter.addEventListener('change', function () {
+      state.series = this.value;
+      state.page = 1;
+      renderProducts();
+    });
+
+    chamberFilter.addEventListener('change', function () {
+      state.chamber = this.value;
+      state.page = 1;
+      renderProducts();
+    });
+
     sortSelect.addEventListener('change', function () {
       state.sort = this.value;
       state.page = 1;
@@ -455,6 +535,8 @@
       state.maxPrice = '';
       state.maxPower = '';
       state.maxArea = '';
+      state.series = '';
+      state.chamber = '';
       state.sort = 'popular';
       state.page = 1;
 
@@ -462,6 +544,8 @@
       priceFilter.value = '';
       powerFilter.value = '';
       areaFilter.value = '';
+      seriesFilter.value = '';
+      chamberFilter.value = '';
       sortSelect.value = 'popular';
 
       renderProducts();

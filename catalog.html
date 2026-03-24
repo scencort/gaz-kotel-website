@@ -78,12 +78,35 @@
         </label>
 
         <label class="control-field">
+          <span>Серия</span>
+          <select id="seriesFilter">
+            <option value="">Любая</option>
+            <option value="aogv">АОГВ</option>
+            <option value="ishma">ИШМА</option>
+          </select>
+        </label>
+
+        <label class="control-field">
+          <span>Камера сгорания</span>
+          <select id="chamberFilter">
+            <option value="">Любая</option>
+            <option value="open">Открытая</option>
+            <option value="closed">Закрытая</option>
+          </select>
+        </label>
+
+        <label class="control-field">
           <span>Сортировка</span>
           <select id="sortSelect">
             <option value="popular">По популярности</option>
             <option value="priceAsc">Цена: по возрастанию</option>
             <option value="priceDesc">Цена: по убыванию</option>
-            <option value="nameAsc">По названию</option>
+            <option value="nameAsc">Название: А-Я</option>
+            <option value="nameDesc">Название: Я-А</option>
+            <option value="powerAsc">Мощность: по возрастанию</option>
+            <option value="powerDesc">Мощность: по убыванию</option>
+            <option value="areaAsc">Площадь: по возрастанию</option>
+            <option value="areaDesc">Площадь: по убыванию</option>
           </select>
         </label>
 
