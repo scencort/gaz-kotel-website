@@ -459,6 +459,11 @@ footer {
 }
 
 @media (max-width: 768px) {
+  body::before,
+  body::after {
+    display: none;
+  }
+
   header {
     padding: 18px 14px 14px;
   }
