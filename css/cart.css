@@ -16,7 +16,7 @@ nav {
   width: 40px;
   height: 40px;
   object-fit: contain;
-  filter: brightness(0) saturate(100%) invert(19%) sepia(29%) saturate(1336%) hue-rotate(182deg) brightness(93%) contrast(92%);
+  filter: brightness(0) saturate(100%) invert(89%) sepia(47%) saturate(511%) hue-rotate(181deg) brightness(101%) contrast(98%);
   transition: transform var(--transition);
 }
 
@@ -75,7 +75,7 @@ form {
   border-radius: 12px;
   overflow: hidden;
   border: 1px solid rgba(150, 189, 255, 0.26);
-  background: radial-gradient(circle at top, rgba(157, 201, 255, 0.42), rgba(228, 241, 255, 0.95));
+  background: radial-gradient(circle at top, rgba(78, 136, 248, 0.24), rgba(10, 28, 65, 0.88));
 }
 
 .item-media img,
@@ -93,7 +93,7 @@ form {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #365b87;
+  color: #d5e6ff;
   font-size: 0.85rem;
 }
 
@@ -225,7 +225,7 @@ form {
   margin-top: 10px;
   font-size: 0.82rem;
   line-height: 1.45;
-  color: #355a86;
+  color: #b9d6ff;
   opacity: 0.95;
 }
 

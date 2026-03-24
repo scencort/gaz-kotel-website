@@ -2,18 +2,18 @@
   --blue-950: #eef6ff;
   --blue-900: #dcecff;
   --blue-800: #c8deff;
-  --blue-700: #93b8ef;
+  --blue-700: #1d4fb3;
   --blue-500: #2f78ff;
-  --blue-300: #6b9fe6;
-  --text-main: #15355f;
-  --text-soft: #2f4f78;
-  --surface: rgba(236, 245, 255, 0.78);
-  --surface-strong: rgba(224, 238, 255, 0.92);
-  --border: rgba(97, 131, 181, 0.34);
+  --blue-300: #7fb6ff;
+  --text-main: #eaf2ff;
+  --text-soft: #bdd3f4;
+  --surface: rgba(9, 24, 57, 0.66);
+  --surface-strong: rgba(8, 20, 48, 0.84);
+  --border: rgba(130, 170, 235, 0.28);
   --success: #37d39d;
   --danger: #ff667f;
-  --shadow-soft: 0 12px 30px rgba(56, 95, 150, 0.2);
-  --shadow-strong: 0 20px 44px rgba(56, 95, 150, 0.3);
+  --shadow-soft: 0 12px 32px rgba(2, 8, 28, 0.36);
+  --shadow-strong: 0 22px 50px rgba(2, 8, 28, 0.48);
   --radius-sm: 10px;
   --radius-md: 16px;
   --radius-lg: 24px;
@@ -77,7 +77,7 @@ body::before {
   height: 420px;
   top: -120px;
   right: -120px;
-  background: rgba(124, 168, 235, 0.26);
+  background: rgba(53, 127, 255, 0.2);
   animation: blobFloat 12s ease-in-out infinite;
 }
 
@@ -86,12 +86,12 @@ body::after {
   height: 360px;
   bottom: -120px;
   left: -110px;
-  background: rgba(151, 191, 247, 0.3);
+  background: rgba(21, 81, 201, 0.24);
   animation: blobFloat 15s ease-in-out infinite reverse;
 }
 
 header {
-  background: linear-gradient(135deg, rgba(216, 232, 255, 0.92), rgba(191, 216, 250, 0.9));
+  background: linear-gradient(135deg, rgba(9, 25, 63, 0.88), rgba(18, 61, 150, 0.76));
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   color: var(--text-main);
@@ -116,7 +116,7 @@ header {
   width: 38px;
   height: 38px;
   object-fit: contain;
-  filter: brightness(0) saturate(100%) invert(19%) sepia(29%) saturate(1336%) hue-rotate(182deg) brightness(93%) contrast(92%);
+  filter: brightness(0) saturate(100%) invert(91%) sepia(25%) saturate(600%) hue-rotate(179deg) brightness(102%) contrast(102%);
   transition: transform var(--transition), filter var(--transition);
 }
 
@@ -140,14 +140,14 @@ header h1 {
   align-items: center;
   gap: 10px;
   text-decoration: none;
-  color: var(--text-main);
+  color: #f2f7ff;
 }
 
 .brand-logo {
   width: 40px;
   height: 40px;
   object-fit: contain;
-  filter: drop-shadow(0 6px 12px rgba(84, 124, 186, 0.3));
+  filter: drop-shadow(0 6px 12px rgba(8, 29, 76, 0.42));
 }
 
 .icon-svg {
@@ -175,9 +175,9 @@ nav {
   width: 42px;
   height: 42px;
   border-radius: 12px;
-  border: 1px solid rgba(108, 146, 197, 0.42);
-  background: rgba(194, 219, 252, 0.8);
-  color: #1c406f;
+  border: 1px solid rgba(160, 196, 255, 0.36);
+  background: rgba(102, 161, 255, 0.16);
+  color: #fff;
   cursor: pointer;
   box-shadow: 0 8px 18px rgba(5, 16, 40, 0.35);
   transition: transform var(--transition), background-color var(--transition), border-color var(--transition);
@@ -198,7 +198,7 @@ nav {
   display: block;
   width: 18px;
   height: 2px;
-  background: #1b3e6a;
+  background: #fff;
   border-radius: 8px;
   position: relative;
   margin: 0 auto;
@@ -212,7 +212,7 @@ nav {
   left: 50%;
   width: 18px;
   height: 2px;
-  background: #1b3e6a;
+  background: #fff;
   border-radius: 8px;
   transform: translateX(-50%);
   transition: transform var(--transition), top var(--transition);
@@ -253,15 +253,15 @@ nav a {
 
 nav a:hover {
   transform: translateY(-1px);
-  background: rgba(123, 168, 230, 0.2);
-  border-color: rgba(108, 153, 214, 0.45);
-  color: #16385f;
+  background: rgba(128, 176, 255, 0.12);
+  border-color: rgba(147, 189, 255, 0.35);
+  color: #ffffff;
 }
 
 nav a.active {
-  background: rgba(107, 156, 224, 0.25);
-  border-color: rgba(93, 145, 211, 0.55);
-  color: #15355f;
+  background: rgba(128, 176, 255, 0.18);
+  border-color: rgba(168, 202, 255, 0.6);
+  color: #ffffff;
 }
 
 main {
@@ -270,7 +270,7 @@ main {
 
 h2,
 h3 {
-  color: var(--text-main);
+  color: #f1f6ff;
 }
 
 p,
@@ -280,11 +280,11 @@ label {
 }
 
 a {
-  color: #235a95;
+  color: #9fcbff;
 }
 
 a:hover {
-  color: #1b4c82;
+  color: #d7e9ff;
 }
 
 button,
@@ -318,12 +318,12 @@ button,
 
 .btn-details {
   background: transparent;
-  border-color: rgba(99, 145, 206, 0.54);
-  color: #1f4f82;
+  border-color: rgba(150, 190, 255, 0.6);
+  color: #cfe4ff;
 }
 
 .btn-details:hover {
-  background: rgba(112, 165, 236, 0.16);
+  background: rgba(144, 188, 255, 0.16);
 }
 
 .btn-cart {
@@ -364,16 +364,16 @@ button:active,
 input,
 textarea,
 select {
-  background: rgba(245, 250, 255, 0.96);
-  color: #173a66;
-  border: 1px solid rgba(123, 162, 214, 0.42);
+  background: rgba(10, 25, 57, 0.7);
+  color: #eaf2ff;
+  border: 1px solid rgba(141, 182, 245, 0.28);
   border-radius: 10px;
   transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition), background-color var(--transition);
 }
 
 input::placeholder,
 textarea::placeholder {
-  color: rgba(62, 95, 136, 0.68);
+  color: rgba(194, 214, 247, 0.7);
 }
 
 input:focus,
@@ -415,12 +415,12 @@ section,
 }
 
 footer {
-  background: linear-gradient(135deg, rgba(215, 232, 255, 0.92), rgba(192, 218, 252, 0.9));
+  background: linear-gradient(135deg, rgba(8, 22, 53, 0.92), rgba(18, 55, 136, 0.78));
   border-top: 1px solid var(--border);
   text-align: center;
   padding: 20px;
   font-size: 14px;
-  color: #264b78;
+  color: #d8e8ff;
   flex-shrink: 0;
   margin-top: 42px;
 }
