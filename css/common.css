@@ -54,7 +54,7 @@ body {
 
 body.is-ready {
   opacity: 1;
-  transform: translateY(0);
+  transform: none;
 }
 
 body.is-leaving {
@@ -200,11 +200,13 @@ nav {
 }
 
 .menu-toggle .menu-icon {
+  display: block;
   width: 18px;
   height: 2px;
   background: #fff;
   border-radius: 8px;
   position: relative;
+  margin: 0 auto;
   transition: transform var(--transition), opacity var(--transition);
 }
 
@@ -212,11 +214,12 @@ nav {
 .menu-toggle .menu-icon::after {
   content: '';
   position: absolute;
-  left: 0;
+  left: 50%;
   width: 18px;
   height: 2px;
   background: #fff;
   border-radius: 8px;
+  transform: translateX(-50%);
   transition: transform var(--transition), top var(--transition);
 }
 
@@ -234,12 +237,12 @@ body.menu-open .menu-toggle .menu-icon {
 
 body.menu-open .menu-toggle .menu-icon::before {
   top: 0;
-  transform: rotate(45deg);
+  transform: translateX(-50%) rotate(45deg);
 }
 
 body.menu-open .menu-toggle .menu-icon::after {
   top: 0;
-  transform: rotate(-45deg);
+  transform: translateX(-50%) rotate(-45deg);
 }
 
 nav a {

@@ -202,7 +202,10 @@
             showToast('Удалено из избранного');
           } catch (error) {
             console.error('Ошибка удаления из избранного:', error);
-            showToast('Не удалось обновить избранное', false);
+            favorites.delete(id);
+            this.classList.remove('active');
+            this.textContent = 'В избранное';
+            showToast('Сохранено локально (без сервера)');
           }
         } else {
           try {
@@ -213,7 +216,10 @@
             showToast((product ? product.name : 'Товар') + ' добавлен в избранное');
           } catch (error) {
             console.error('Ошибка добавления в избранное:', error);
-            showToast('Не удалось обновить избранное', false);
+            favorites.add(id);
+            this.classList.add('active');
+            this.textContent = 'В избранном';
+            showToast('Сохранено локально (без сервера)');
           }
         }
 

@@ -221,6 +221,14 @@ form {
   font-weight: 700;
 }
 
+.delivery-note {
+  margin-top: 10px;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  color: #b9d6ff;
+  opacity: 0.95;
+}
+
 form {
   max-width: 520px;
   margin: 26px auto 0;

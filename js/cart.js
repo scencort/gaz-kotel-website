@@ -175,6 +175,14 @@
     const totalDisplay = document.getElementById('cart-total');
     if (!totalDisplay) return;
 
+    if (!cart.length) {
+      totalDisplay.style.display = 'none';
+      totalDisplay.innerHTML = '';
+      return;
+    }
+
+    totalDisplay.style.display = 'block';
+
     const summary = calculateSummary();
     const discountLabel = summary.discount > 0
       ? '- ' + formatPrice(summary.discount) + ' (' + summary.discountPercent + '%)'
@@ -186,7 +194,8 @@
       '<div class="summary-row"><span>Товары</span><strong>' + formatPrice(summary.subtotal) + '</strong></div>' +
       '<div class="summary-row"><span>Скидка</span><strong>' + discountLabel + '</strong></div>' +
       '<div class="summary-row"><span>Доставка</span><strong>' + deliveryLabel + '</strong></div>' +
-      '<div class="summary-row total"><span>Итого к оплате</span><strong>' + formatPrice(summary.total) + '</strong></div>';
+      '<div class="summary-row total"><span>Итого к оплате</span><strong>' + formatPrice(summary.total) + '</strong></div>' +
+      '<p class="delivery-note">Стоимость доставки предварительная. Точный расчет сообщит менеджер после звонка: все зависит от габаритов, веса и упаковки.</p>';
   }
 
   function updateQuantity(index, newQty) {
