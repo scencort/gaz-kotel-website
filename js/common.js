@@ -129,6 +129,11 @@
 
   function initAOS() {
     if (!window.AOS) {
+      // Fallback for slow/mobile connections when AOS script is not loaded.
+      document.querySelectorAll('[data-aos]').forEach(function (element) {
+        element.style.opacity = '1';
+        element.style.transform = 'none';
+      });
       return;
     }
 

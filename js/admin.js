@@ -465,20 +465,28 @@
   }
 
   async function refreshAll() {
-    try {
-      setStatusMessage('Загрузка данных админ-панели...', false);
-      await Promise.all([loadSummary(), loadOrders(), loadProducts(), loadContacts()]);
+    setStatusMessage('Загрузка данных админ-панели...', false);
+
+    const results = await Promise.allSettled([
+      loadSummary(),
+      loadOrders(),
+      loadProducts(),
+      loadContacts()
+    ]);
+
+    const failed = results.filter(function (result) { return result.status === 'rejected'; });
+    if (!failed.length) {
       setStatusMessage('Данные загружены.', false);
       setAuthStatus('Вход выполнен. Ключ принят.', false);
-    } catch (error) {
-      console.error(error);
-      renderSummary({ orders: 0, products: 0, contacts: 0, reviews: 0 });
-      renderOrders([]);
-      renderProducts([]);
-      renderContacts([]);
-      setStatusMessage(error.message || 'Не удалось загрузить данные.', true);
-      setAuthStatus(error.message || 'Проверьте ключ администратора.', true);
+      return;
     }
+
+    failed.forEach(function (result) {
+      console.error(result.reason);
+    });
+
+    setStatusMessage('Часть данных не загрузилась. Проверьте ключ и backend.', true);
+    setAuthStatus(failed[0].reason && failed[0].reason.message ? failed[0].reason.message : 'Проверьте доступ к API.', true);
   }
 
   document.addEventListener('DOMContentLoaded', function () {

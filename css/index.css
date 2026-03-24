@@ -133,6 +133,55 @@ section {
   gap: 14px;
 }
 
+.reviews-help {
+  margin-bottom: 12px;
+  color: #c8dfff;
+}
+
+.review-form {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 14px;
+  padding: 14px;
+  border-radius: 14px;
+  background: rgba(12, 32, 72, 0.66);
+  border: 1px solid rgba(136, 180, 252, 0.24);
+}
+
+.review-form label {
+  display: grid;
+  gap: 6px;
+  color: #d8e8ff;
+  font-size: 0.92rem;
+}
+
+.review-form input,
+.review-form select,
+.review-form textarea {
+  border-radius: 10px;
+  padding: 10px;
+  border: 1px solid rgba(136, 180, 252, 0.28);
+  background: rgba(8, 24, 58, 0.72);
+  color: #eaf2ff;
+}
+
+.review-form textarea {
+  min-height: 90px;
+  resize: vertical;
+}
+
+.review-form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+#reviewStatus {
+  min-height: 20px;
+  font-size: 0.9rem;
+}
+
 .review-card {
   background: rgba(12, 32, 72, 0.66);
   border: 1px solid rgba(136, 180, 252, 0.24);

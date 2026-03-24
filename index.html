@@ -97,21 +97,36 @@
 
     <section class="reviews" data-aos="fade-up" data-aos-delay="260">
       <h2>Отзывы клиентов</h2>
-      <div class="reviews-grid">
+      <p class="reviews-help">Оставьте отзыв о консультации, доставке или работе котла. Ваше мнение поможет другим выбрать подходящую модель.</p>
+
+      <form id="reviewForm" class="review-form">
+        <label>
+          Ваше имя
+          <input id="reviewAuthor" name="author" required placeholder="Например: Алексей, Подольск">
+        </label>
+        <label>
+          Оценка
+          <select id="reviewRating" name="rating" required>
+            <option value="5">5 — Отлично</option>
+            <option value="4">4 — Хорошо</option>
+            <option value="3">3 — Нормально</option>
+            <option value="2">2 — Плохо</option>
+            <option value="1">1 — Очень плохо</option>
+          </select>
+        </label>
+        <label>
+          Текст отзыва
+          <textarea id="reviewContent" name="content" required placeholder="Напишите, что вам понравилось и что можно улучшить"></textarea>
+        </label>
+        <div class="review-form-actions">
+          <button type="submit" class="btn-primary">Отправить отзыв</button>
+          <p id="reviewStatus" aria-live="polite"></p>
+        </div>
+      </form>
+
+      <div class="reviews-grid" id="reviewsList">
         <article class="review-card">
-          <h3>Алексей, Подмосковье</h3>
-          <p>Подобрали котёл под дом 140 м², помогли с настройкой. В доме стабильно тепло, расход газа стал ниже.</p>
-          <span>Оценка: 5/5</span>
-        </article>
-        <article class="review-card">
-          <h3>Марина, Тверь</h3>
-          <p>Доставили быстро, всё приехало в отличном состоянии. Отдельно спасибо за понятную консультацию по монтажу.</p>
-          <span>Оценка: 5/5</span>
-        </article>
-        <article class="review-card">
-          <h3>Игорь, Калуга</h3>
-          <p>Брали котёл для небольшого производства. Работает без перебоев, сервис на уровне.</p>
-          <span>Оценка: 4.9/5</span>
+          <h3>Отзывы загружаются...</h3>
         </article>
       </div>
     </section>
