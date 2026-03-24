@@ -121,7 +121,7 @@
       card.setAttribute('data-aos', 'zoom-in');
       card.setAttribute('data-aos-delay', String(index * 40));
       card.innerHTML =
-        '<img src="' + safeImage + '" alt="' + safeName + '">' +
+        '<img loading="lazy" decoding="async" src="' + safeImage + '" alt="' + safeName + '">' +
         '<h3>' + safeName + '</h3>' +
         '<p>' + safeDescription + '</p>' +
         '<div class="favorite-price">' + product.price.toLocaleString('ru-RU') + ' ₽</div>' +

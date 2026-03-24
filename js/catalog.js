@@ -250,7 +250,7 @@
       const safeImage = escapeHtml(product.image || '');
 
       productCard.innerHTML =
-        '<img src="' + safeImage + '" alt="' + safeName + '">' +
+        '<img loading="lazy" decoding="async" src="' + safeImage + '" alt="' + safeName + '">' +
         '<h3>' + safeName + '</h3>' +
         '<p>' + safeDescription + '</p>' +
         '<div class="price">' + product.price.toLocaleString('ru-RU') + ' ₽</div>' +

@@ -41,6 +41,18 @@ const MIME_TYPES = {
   '.ico': 'image/x-icon'
 };
 
+const STATIC_CACHE = {
+  '.html': 'no-cache',
+  '.css': 'public, max-age=86400',
+  '.js': 'public, max-age=86400',
+  '.jpg': 'public, max-age=604800',
+  '.jpeg': 'public, max-age=604800',
+  '.png': 'public, max-age=604800',
+  '.svg': 'public, max-age=604800',
+  '.webp': 'public, max-age=604800',
+  '.ico': 'public, max-age=604800'
+};
+
 const schemaSql = fs.readFileSync(path.join(ROOT, 'db', 'schema.sql'), 'utf8');
 const rateLimitStore = new Map();
 
@@ -380,8 +392,16 @@ function serveStatic(req, res) {
 
     const ext = path.extname(requestedPath).toLowerCase();
     const contentType = MIME_TYPES[ext] || 'application/octet-stream';
+    const cacheControl = STATIC_CACHE[ext] || 'public, max-age=3600';
 
-    res.writeHead(200, { 'Content-Type': contentType });
+    res.writeHead(200, {
+      'Content-Type': contentType,
+      'Cache-Control': cacheControl,
+      'X-Content-Type-Options': 'nosniff',
+      'Referrer-Policy': 'strict-origin-when-cross-origin',
+      'X-Frame-Options': 'SAMEORIGIN',
+      'Permissions-Policy': 'camera=(), microphone=(), geolocation=()'
+    });
     fs.createReadStream(requestedPath).pipe(res);
   });
 }
@@ -995,3 +1015,27 @@ initDatabase()
     console.error('Failed to initialize database:', error.message);
     process.exit(1);
   });
+
+function shutdown(signal) {
+  console.log(`Received ${signal}. Shutting down...`);
+
+  server.close(() => {
+    pool.end()
+      .then(() => {
+        console.log('Shutdown complete.');
+        process.exit(0);
+      })
+      .catch(error => {
+        console.error('Error while closing DB pool:', error.message);
+        process.exit(1);
+      });
+  });
+
+  setTimeout(() => {
+    console.error('Forced shutdown after timeout.');
+    process.exit(1);
+  }, 10_000).unref();
+}
+
+process.on('SIGTERM', () => shutdown('SIGTERM'));
+process.on('SIGINT', () => shutdown('SIGINT'));

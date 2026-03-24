@@ -1,6 +1,15 @@
 (function () {
   const REVIEWS_API_URL = '/api/reviews';
 
+  function escapeHtml(value) {
+    return String(value || '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
   function renderHighlights() {
     const featuredIds = ['boiler1', 'boiler5', 'boiler10'];
     const highlightList = document.getElementById('highlightList');
@@ -22,22 +31,19 @@
       card.className = 'highlight-product';
       card.setAttribute('data-aos', 'zoom-in');
       card.setAttribute('data-aos-delay', String(250 + index * 100));
+      const safeId = encodeURIComponent(product.id || '');
+      const safeName = escapeHtml(product.name || 'Без названия');
+      const safeImage = escapeHtml(product.image || '');
+      const safeDescription = escapeHtml(product.shortDescription || '');
       card.innerHTML =
-        '<img src="' + product.image + '" alt="' + product.name + '">' +
-        '<h3>' + product.name + '</h3>' +
-        '<p>' + product.shortDescription + '</p>' +
+        '<img loading="lazy" decoding="async" src="' + safeImage + '" alt="' + safeName + '">' +
+        '<h3>' + safeName + '</h3>' +
+        '<p>' + safeDescription + '</p>' +
         '<div class="price">' + product.price.toLocaleString('ru-RU') + ' ₽</div>';
+      card.href = 'product.html?id=' + safeId;
 
       highlightList.appendChild(card);
     });
-  }
-
-  function escapeHtml(value) {
-    return String(value || '')
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;');
   }
 
   function setReviewStatus(message, isError) {

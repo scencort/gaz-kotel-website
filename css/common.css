@@ -408,16 +408,7 @@ button,
 .btn,
 .btn-primary,
 .submit-btn,
-#checkout-btn,
-input,
-textarea,
-section,
-.product,
-.highlight-product,
-.contact-card,
-.advantage-item,
-.stat-item,
-.cart-item {
+#checkout-btn {
   will-change: transform;
 }
 
@@ -616,5 +607,29 @@ footer {
   footer {
     font-size: 13px;
     padding: 14px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  body {
+    animation: none;
+    background-size: auto;
+  }
+
+  body::before,
+  body::after {
+    display: none;
   }
 }

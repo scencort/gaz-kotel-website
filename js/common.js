@@ -1,6 +1,10 @@
 (function () {
   const TRANSITION_MS = 260;
 
+  function prefersReducedMotion() {
+    return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  }
+
   function markPageReady() {
     requestAnimationFrame(function () {
       document.body.classList.add('is-ready');
@@ -8,6 +12,10 @@
   }
 
   function bindPageTransitions() {
+    if (prefersReducedMotion()) {
+      return;
+    }
+
     const currentOrigin = window.location.origin;
 
     document.querySelectorAll('a[href]').forEach(function (link) {
@@ -138,7 +146,10 @@
     }
 
     window.AOS.init({
-      duration: 800,
+      duration: 650,
+      disable: function () {
+        return prefersReducedMotion() || window.innerWidth < 480;
+      },
       once: true
     });
   }

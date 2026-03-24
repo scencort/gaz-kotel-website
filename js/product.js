@@ -1,6 +1,15 @@
 (function () {
   let currentProductId = null;
 
+  function escapeHtml(value) {
+    return String(value || '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
   function getQueryParam(param) {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get(param);
@@ -32,19 +41,21 @@
 
     const imagePath = product.image;
     const formattedPrice = product.price.toLocaleString('ru-RU') + ' ₽';
+    const safeName = escapeHtml(product.name || 'Без названия');
+    const safeImage = escapeHtml(imagePath || '');
 
     const descriptionHtml = product.description.map(function (p) {
-      return '<p>' + p + '</p>';
+      return '<p>' + escapeHtml(p) + '</p>';
     }).join('');
 
     const specsHtml = product.specs.map(function (item) {
-      return '<li>' + item + '</li>';
+      return '<li>' + escapeHtml(item) + '</li>';
     }).join('');
 
     container.innerHTML =
       '<button type="button" class="back-button" id="backButton">Назад</button>' +
-      '<img src="' + imagePath + '" alt="' + product.name + '" />' +
-      '<h2>' + product.name + '</h2>' +
+      '<img loading="lazy" decoding="async" src="' + safeImage + '" alt="' + safeName + '" />' +
+      '<h2>' + safeName + '</h2>' +
       descriptionHtml +
       '<ul>' + specsHtml + '</ul>' +
       '<strong>Цена: ' + formattedPrice + '</strong>';

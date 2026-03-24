@@ -8,11 +8,18 @@ User=www-data
 Group=www-data
 WorkingDirectory=/var/www/gaz-kotel-website
 EnvironmentFile=/var/www/gaz-kotel-website/.env
+Environment=NODE_ENV=production
 ExecStart=/usr/bin/node /var/www/gaz-kotel-website/server.js
 Restart=always
 RestartSec=5
+TimeoutStopSec=30
+KillSignal=SIGTERM
 NoNewPrivileges=true
 PrivateTmp=true
+ProtectSystem=full
+ProtectHome=true
+ReadWritePaths=/var/www/gaz-kotel-website
+LimitNOFILE=65535
 
 [Install]
 WantedBy=multi-user.target

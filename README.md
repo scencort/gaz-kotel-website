@@ -184,6 +184,17 @@ cart.html ожидает endpoint:
 
 ## Деплой на выделенный сервер (Ubuntu)
 
+### Перед деплоем (локально)
+
+1. Создайте рабочий `.env` на основе `.env.production.example`.
+2. Проверьте готовность проекта:
+
+```bash
+npm run predeploy:check
+```
+
+Если проверка не проходит, исправьте замечания и запустите снова.
+
 1. Установите зависимости:
 
 ```bash
@@ -253,6 +264,8 @@ sudo ln -s /etc/nginx/sites-available/gaz-kotel /etc/nginx/sites-enabled/gaz-kot
 sudo nginx -t
 sudo systemctl restart nginx
 ```
+
+Для production с HTTPS используйте шаблон `deploy/nginx-gaz-kotel-ssl.conf`.
 
 1. Включите HTTPS (Certbot):
 
