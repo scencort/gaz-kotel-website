@@ -276,15 +276,19 @@ form input {
 
   .cart-item {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: stretch;
     gap: 10px;
   }
 
   .item-media {
     width: 100%;
-    max-width: 240px;
+    max-width: none;
     min-width: 0;
     height: 170px;
+  }
+
+  .item-info {
+    width: 100%;
   }
 
   .item-controls {
@@ -321,6 +325,8 @@ form input {
 
   .item-media {
     height: 145px;
+    width: 100%;
+    max-width: none;
   }
 
   .item-info h3 {

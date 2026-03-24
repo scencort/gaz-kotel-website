@@ -370,6 +370,9 @@ h2 {
     font-size: 0.78rem;
     border-radius: 10px;
     line-height: 1.15;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    text-align: center;
   }
 
   .toast {
@@ -423,6 +426,8 @@ h2 {
     font-size: 0.74rem;
     min-height: 32px;
     padding: 7px 4px;
+    white-space: normal;
+    overflow-wrap: anywhere;
   }
 
   .quick-view-card {
@@ -450,5 +455,7 @@ h2 {
     font-size: 0.78rem;
     min-height: 34px;
     padding: 8px 6px;
+    white-space: normal;
+    overflow-wrap: anywhere;
   }
 }
