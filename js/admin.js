@@ -76,6 +76,14 @@
     return 'Новый';
   }
 
+  function toNonNegativeInt(value) {
+    const parsed = Number(value);
+    if (!Number.isFinite(parsed) || parsed < 0) {
+      return 0;
+    }
+    return Math.floor(parsed);
+  }
+
   function setStatusMessage(message, isError) {
     const node = document.getElementById('adminStatus');
     if (!node) return;
@@ -189,10 +197,11 @@
   }
 
   function renderSummary(summary) {
-    document.getElementById('summaryOrders').textContent = String(summary.orders || 0);
-    document.getElementById('summaryProducts').textContent = String(summary.products || 0);
-    document.getElementById('summaryContacts').textContent = String(summary.contacts || 0);
-    document.getElementById('summaryReviews').textContent = String(summary.reviews || 0);
+    const safe = summary || {};
+    document.getElementById('summaryOrders').textContent = String(toNonNegativeInt(safe.orders));
+    document.getElementById('summaryProducts').textContent = String(toNonNegativeInt(safe.products));
+    document.getElementById('summaryContacts').textContent = String(toNonNegativeInt(safe.contacts));
+    document.getElementById('summaryReviews').textContent = String(toNonNegativeInt(safe.reviews));
   }
 
   function renderOrders(orders) {
@@ -463,6 +472,10 @@
       setAuthStatus('Вход выполнен. Ключ принят.', false);
     } catch (error) {
       console.error(error);
+      renderSummary({ orders: 0, products: 0, contacts: 0, reviews: 0 });
+      renderOrders([]);
+      renderProducts([]);
+      renderContacts([]);
       setStatusMessage(error.message || 'Не удалось загрузить данные.', true);
       setAuthStatus(error.message || 'Проверьте ключ администратора.', true);
     }
