@@ -47,14 +47,9 @@ body {
   animation: gradientShift 14s ease infinite;
   position: relative;
   overflow-x: hidden;
-  opacity: 0;
-  transform: translateY(8px);
-  transition: opacity 0.35s ease, transform 0.35s ease, filter 0.35s ease;
-}
-
-body.is-ready {
   opacity: 1;
   transform: none;
+  transition: opacity 0.35s ease, transform 0.35s ease, filter 0.35s ease;
 }
 
 body.is-leaving {
