@@ -4,8 +4,8 @@ header {
 
 .cart-icon {
   position: absolute;
-  top: 33px;
-  right: 28px;
+  top: 31px;
+  right: 24px;
   z-index: 1000;
 }
 
@@ -15,8 +15,8 @@ header {
 }
 
 .cart-icon img {
-  width: 40px;
-  height: 40px;
+  width: 38px;
+  height: 38px;
   object-fit: contain;
   transition: transform var(--transition), filter var(--transition);
   filter: brightness(0) saturate(100%) invert(89%) sepia(47%) saturate(511%) hue-rotate(181deg) brightness(101%) contrast(98%);
@@ -282,7 +282,7 @@ h2 {
   }
 
   .cart-icon {
-    top: 24px;
+    top: 14px;
     right: 16px;
   }
 

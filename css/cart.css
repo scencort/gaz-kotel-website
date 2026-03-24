@@ -8,13 +8,13 @@ nav {
 
 .cart-icon {
   position: absolute;
-  top: 34px;
+  top: 31px;
   right: 24px;
 }
 
 .cart-icon img {
-  width: 40px;
-  height: 40px;
+  width: 38px;
+  height: 38px;
   object-fit: contain;
   filter: brightness(0) saturate(100%) invert(89%) sepia(47%) saturate(511%) hue-rotate(181deg) brightness(101%) contrast(98%);
   transition: transform var(--transition);
@@ -265,7 +265,7 @@ form input {
   }
 
   .cart-icon {
-    top: 22px;
+    top: 14px;
     right: 14px;
   }
 
